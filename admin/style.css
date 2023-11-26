@@ -1,0 +1,358 @@
+:root {
+  --main-bg-color: #cccfd1;
+  --main-accent-color: #348b41;
+  --hover-accent-color: #79a988;
+  --main-font-color: #394852;
+  --secondary-font-color: #071f2a;
+  --placeholder-color: #bbc3bd;
+  --light-shadow: 0 2px 5px rgba(255, 255, 255, 0.7);
+  --dark-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+  --border-radius: 0.625rem;
+  --transition-speed: 0.3s;
+  --font-regular: 400;
+  --font-bold: 700;
+}
+
+body {
+  background: var(--placeholder-color);
+  font-family: 'Roboto', sans-serif;
+  padding: 20px;
+  margin: 0;
+  height: 100%;
+  color: var(--main-font-color);
+  font-weight: var(--font-regular);
+  line-height: 1.6;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.logo-container {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.2rem;
+  bottom: 1.2rem;
+  /* padding-right: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px; */
+  background: rgba(121, 169, 135, 0.50);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  transition: transform var(--transition-speed);
+}
+
+.logo {
+  position: relative;
+  top: 30px;
+  left: -30px;
+  width: 175px;
+  height: auto;
+}
+
+input[type="text"] {
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+.event_div,
+#jsonbtn,
+.event_div button {
+  background: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+  transition: transform var(--transition-speed);
+}
+
+.form-container {
+  background: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  transition: transform var(--transition-speed);
+}
+
+.form-container {
+  padding: 25px;
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+input[type="datetime-local"] {
+  color: #00000f;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+input[type="text"]:focus,
+input[type="datetime-local"]:focus {}
+
+input::placeholder,
+.ql-editor::placeholder {}
+
+input[type="text"]:hover,
+input[type="datetime-local"]:hover,
+#jsonbtn:hover,
+#editor-container:hover,
+.event_div button:hover {
+  border-color: var(--hover-accent-color);
+  /* transform: scale(1.02); */
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+}
+
+#editor-container {
+  background: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  transition: transform var(--transition-speed);
+  position: relative;
+  z-index: 9999;
+  color: var(--main-font-color);
+  margin-bottom: 20px;
+}
+
+
+.ql-editor[data-placeholder]::before {
+  font-style: normal !important;
+  font-size: 16px;
+  font-weight: var(--font-regular);
+}
+
+#editor-container .ql-editor {
+  font-size: 16px;
+  font-weight: var(--font-regular);
+}
+
+.ql-toolbar,
+.ql-editor,
+.ql-container.ql-snow,
+.ql-editor .ql-blank {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+#jsonbtn {
+  color: white;
+  padding: 10px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border: 0;
+  background: rgba(52, 139, 64, 0.42);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+}
+
+#displayallevents {
+  margin-top: 20px;
+}
+
+.event_div {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  transition: all var(--transition-speed);
+}
+
+.event_title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--main-font-color);
+  margin: 0;
+  padding: 0.5em 0;
+}
+
+.event_date {
+  font-size: 1em;
+  color: var(--secondary-font-color);
+  margin: 0;
+  padding: 0.5em 0;
+}
+
+.event_div:hover {
+  /* transform: scale(1.025); */
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.event_div p {
+  font-size: 16px;
+  margin-bottom: 1em;
+  margin-left: 5px;
+  margin-right: 5px;
+  /* padding: 15px; */
+  /* commented out bc otherwise stupid spacing */
+  word-wrap: break-word;
+}
+
+.event_div button {
+  color: white;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  background: rgba(52, 139, 64, 0.42);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-bold);
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: var(--font-bold);
+}
+
+input[type="text"],
+input[type="datetime-local"],
+#jsonbtn,
+.event_div button {
+  font-size: 16px;
+}
+
+.event_div {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#text_container {
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: 90%;
+  text-align: left;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  transition: transform var(--transition-speed);
+}
+
+#text_container p {
+  text-align: justify;
+  line-height: 1.2em;
+  letter-spacing: -0.015em;
+}
+
+#text_container li {
+  line-height: 1.2em;
+}
+
+
+#date_container {
+  text-align: middle;
+  display: inline-block;
+  margin: 0 auto;
+  margin-bottom: 0px;
+  width: auto;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 2px;
+  padding-bottom: 0px;
+  border-radius: 10px;
+  background-color: #ebebeb;
+}
+
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.input-badge {
+  max-width: 15%;
+  font-size: 18px;
+}
+
+#seiten-wechsel-intervall {
+  background: var(--main-accent-color);
+  border-radius: var(--border-radius);
+
+  align-items: center;
+  justify-content: center;
+  display: inline;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  padding: 5px;
+}
+
+/* Example CSS for styling the slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  background: #d3d3d3;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+input[type="range"]:hover {
+  opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #4CAF50;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.large-text {
+	font-size: 24px;
+}
+
+.small-text {
+	font-size: 14px;
+}

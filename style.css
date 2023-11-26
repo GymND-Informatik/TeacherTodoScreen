@@ -1,0 +1,148 @@
+@font-face {
+  font-family: 'badSchoolFontDIN1451W02Engschrift';
+  src: url('Gymnasium\ Neusiedl.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DIN W02 Light";
+  src: url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.eot");
+  src: url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.svg#DIN W02 Light")format("svg");
+}
+
+@font-face {
+  font-family: 'badSchoolFontDINNextN0Light';
+  src: url('Nachmittagsbetreuung woff (1)..woff') format('woff');
+  font-weight: normal;
+
+}
+
+h1, h2 {
+  font-family: badSchoolFontDIN1451W02Engschrift;
+
+}
+
+.wrapper {
+  width: 70vw;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  /* background: rgb(225, 250, 225); */
+}
+
+h1 {
+  font-weight: 550;
+  font-size: 6rem;
+  line-height: 5rem;
+  letter-spacing: 0px;
+  padding: 25px;
+  border-radius: 15px;
+  color: black;
+  background: #9fc8a1;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  /* text-transform: uppercase; */
+  /* margin: 25px 0px; */
+}
+
+h2 {
+  font-weight: 400;
+  color: #86AD87;
+  padding-top: 6px;
+  padding-bottom: 0px;
+  letter-spacing: -0.01em;
+  font-size: 1.8rem;
+  margin: 0;
+  text-transform: capitalize;
+
+}
+
+p {
+  font-family: "DIN W02 Light";
+  /* font-family: 'badSchoolFontDINNextN0Light'; */
+  font-weight: normal;
+  margin: 0rem 0rem 0.6rem 0rem;
+  font-size: 1.2rem;
+  line-height: 1.085em;
+}
+
+strong {
+  font-weight: bold;
+}
+
+h5 {
+  margin: 0;
+  padding-top: 4px;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.events {
+  /* border-top: 1px solid black; */
+  /* filip is stupid */
+  width: 100%;
+  display: grid;
+  grid-template-columns: calc(50% - 2rem) calc(50% - 2rem);
+  grid-column-gap: 4rem;
+  grid-row-gap: 4rem;
+}
+
+.event {
+  border: 1px solid rgb(228, 228, 231);
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  word-wrap: break-word;
+  /* Enable word wrapping */
+  height: fit-content;
+  /* box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1); */
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.page {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+.image {
+  height: 120px;
+  left: 10px;
+  top: 7rem;
+  position: absolute;
+}
+
+.small-text {
+	font-size: 1.0rem;
+  font-family: "DIN W02 Light";
+  /* font-family: 'badSchoolFontDINNextN0Light'; */
+  /* font-weight: normal; */
+  margin: 0rem 0rem 0.6rem 0rem;
+  line-height: 1.085em;
+}
+
+li {
+ 	font-size: 1.2rem;
+   font-family: "DIN W02 Light";
+   /* font-family: 'badSchoolFontDINNextN0Light'; */
+   /*font-weight: normal;*/
+   margin: 0rem 0rem 0.6rem 0rem;
+   line-height: 1.085em;
+}
+
+.large-text {
+	font-size: 1.5rem;
+  font-family: "DIN W02 Light";
+  /* font-family: 'badSchoolFontDINNextN0Light'; */
+/*  font-weight: normal;*/
+  margin: 0rem 0rem 0.6rem 0rem;
+  line-height: 1.085em;
+}
