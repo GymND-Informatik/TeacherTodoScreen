@@ -22,7 +22,7 @@ function isDateBetween(checkDate, startDate, endDate) {
 }
 
 function fetchData() {
-        allElements = [];
+        allElements = []
 	  fetch('readFile.php')
             .then(response => response.text())
             .then(data => {
@@ -34,8 +34,10 @@ function fetchData() {
 		        	text = `<p>${text}</p>`;
 			        const element = document.createElement("div");
         			element.innerHTML = `${heading}${text}`;
-			        element.classList.add("event");                           
-			        allElements.push(element);
+			        element.classList.add("event");
+			        
+			        if (event.pinned) { element.classList.add("pinned"); allElements.unshift(element); }
+			        else { allElements.push(element); }
 			}
 		});
             })

@@ -204,13 +204,23 @@ function update() {
       "<button onclick='button_delete(this)' class='delete' name='" +
       x.event +
       "'>Löschen</button>" +
-      `<button onclick='button_edit(this)' class='edit' name="` +
+      "<button onclick='button_edit(this)' class='edit' name='" +
       x.event +
-      `">Bearbeiten</button></div>\n`;
+      "'>Bearbeiten</button><label for='pin_checkbox'>Anheften:</label><input type='checkbox' id='pin_checkbox' onclick='pin(this)' name='" +
+      x.event +
+      "'";
+
+    if (x.pinned) {
+      event_string += "checked";
+    }
+
+    event_string +=
+       ">" +
+       "</div>\n";
     }
   });
 
-  // console.log('events_string', event_string);
+//  console.log('events_string', event_string);
   all_events.innerHTML = event_string;
 }
 
@@ -246,8 +256,11 @@ jsonBtn.addEventListener("click", function() {
     "text": text,
     "von": von_time.value,
     "bis": bis_time.value,
-    "archived": false
+    "archived": false,
+    "pinned": false
   }
+
+  // TODO check for ticks (')
 
   // SAFEGUARDS
   if (_event.value == "") {
@@ -333,3 +346,14 @@ function check_dates() {
 
 // check every ten seconds, can be expanded
 setInterval(check_dates, 10000);
+
+function pin(checkbox) {
+  // Loop through all the elements in arrallevents and see if they match with the button
+  for (var i = 0; i < arrallevents.length; i++) {
+    if (arrallevents[i].event == checkbox.name) {
+      arrallevents[i].pinned = checkbox.checked;
+      break;
+    }
+  }
+  write_into_json();
+}

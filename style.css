@@ -146,3 +146,8 @@ li {
   margin: 0rem 0rem 0.6rem 0rem;
   line-height: 1.085em;
 }
+
+.pinned {
+  border: 3px solid red !important;
+}
+
