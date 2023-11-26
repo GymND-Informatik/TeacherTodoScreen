@@ -8,4 +8,4 @@
 - [ ] Anheften - Wichtiges kann angeheftet werden
 - [ ] Backend: Zeit zum Blättern einschalten
 - [ ] Editieren Datum-Zeile soll entfernt werden
-- [ ] 
+
