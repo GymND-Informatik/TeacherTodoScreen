@@ -7,3 +7,4 @@ if (file_exists($filePath)) {
 } else {
     echo "File not found.";
 }
+?>
