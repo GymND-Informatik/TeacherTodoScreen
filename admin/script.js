@@ -1,3 +1,4 @@
+// Initiate all variables
 var arrallevents = [];
 var aae_index = 0;
 
@@ -13,7 +14,7 @@ const ZEILEN_LIMIT = 10;
 
 // ----------------------------------------------------
 
-// quill configuration
+// Quill configuration
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
   [{ 'color': [] }],
@@ -22,7 +23,7 @@ var toolbarOptions = [
   ['clean']
 ];
 
-// quill initialization
+// Quill initialization
 var quill = new Quill('#editor', {
   theme: 'snow',
   placeholder: 'Beschreiben Sie das Event...',
@@ -44,6 +45,7 @@ read_json();
 
 // -------------------------------------------------------
 
+// Funtion to read the json file and update the arrallevents array 
 function read_json() {
   fetch('readFile.php')
     .then(response => response.text())
@@ -59,18 +61,20 @@ function read_json() {
     });
 }
 
+// Still TODO 
 function upload_change_interval() {
   // TODO this wont work might have to go for another php nightmare trip
   localStorage.setItem('change_interval', change_interval);
 }
 
+// Pad a number with zeroes in front (used for dates)
 function pad(num, size) {
   num = num.toString();
   while (num.length < size) num = "0" + num;
   return num;
 }
 
-// Write it into a simple JSON file server-side called output.json, which will be used for other things later
+// Write it into a simple JSON file server-side called output.json
 function write_into_json() {
 //  console.log(JSON.stringify(arrallevents));
   fetch("saveFile.php", {
@@ -105,6 +109,7 @@ function button_delete(button) {
   write_into_json();
 }
 
+// Sanitize HTML (good practice)
 function sanitizeHTML(html) {
  const parser = new DOMParser();
  const doc = parser.parseFromString(html, 'text/html');
@@ -113,7 +118,7 @@ function sanitizeHTML(html) {
  return doc.body.innerHTML;
 }
 
-// clean up some details from the raw HTML for it to fit into quill
+// Clean up some details from the raw HTML for it to fit into quill
 function cleanQuillHTML(html) {
   var ret;
   ret = html.replace('<p><br></p>', '');
@@ -129,24 +134,25 @@ function button_edit(button) {
       // If they match, delete the element and rerender
       _event.value = arrallevents[i].event;
 
-      // read the text from the events array
+      // Read the text from the events array
       var text = arrallevents[i].text;
 
-      // adjust it so that quill can work with it
+      // Adjust it so that quill can work with it
       var new_text = text.replace(/large-text/g, 'ql-size-large');
       text = new_text.replace(/small-text/g, 'ql-size-small');
 
-      // sanitize it with DOMParser
+      // Sanitize it with DOMParser
       var html_string = text;
 
-      // paste it in, but do some modifications after that
+      // Paste it in, but do some modifications after that
       quill.clipboard.dangerouslyPasteHTML(html_string);
       quill.root.innerHTML = cleanQuillHTML(quill.root.innerHTML);
 
-      // enter the time
+      // Enter the time
       von_time.value = arrallevents[i].von;
       bis_time.value = arrallevents[i].bis;
 
+			// Delete it from the arrallevents
       arrallevents.splice(i, 1);
       update();
       aae_index--;
@@ -175,6 +181,7 @@ function update() {
     // Add a new HTML element 
     printText = x.text.replace(/\n/g, '<br>');
     // console.log('printText', printText);
+
     event_string +=
       "<div class='event_div'>" +
       "<p class='event'><b><font size=5>" +
@@ -260,9 +267,11 @@ jsonBtn.addEventListener("click", function() {
     "pinned": false
   }
 
-  // TODO check for ticks (')
-
-  // SAFEGUARDS
+	// SAFEGUARDS
+  if (_event.value.includes("'")) {
+    alert("Das Zeichen ' darf nicht im Eventnamen sein!");
+    return;
+  }
   if (_event.value == "") {
     alert("Kein Event angegeben!");
     return;
@@ -271,7 +280,7 @@ jsonBtn.addEventListener("click", function() {
     alert("Datum muss angegeben sein!");
     return;
   }
-  // check for time travelling
+  // Check for time travelling
   var von_ = new Date(von_time.value);
   var bis_ = new Date(bis_time.value);
   if (bis_ <= von_) {
@@ -289,7 +298,6 @@ jsonBtn.addEventListener("click", function() {
       return;
     }
   }
-
   // Character limit 
   if (quill.getText().length > ZEICHEN_LIMIT) {
     alert("Der Text darf nicht länger als 1000 Zeichen sein!");
@@ -299,21 +307,27 @@ jsonBtn.addEventListener("click", function() {
     alert("Der Text darf nicht mehr als 7 Zeilen haben!");
     return;
   }
+  
+  // Write it in
   arrallevents[aae_index++] = data;
 
+	// Update the display and update the output file
   update();
   write_into_json();
 
+	// Clear the inputs
   _event.value = '';
   quill.clipboard.dangerouslyPasteHTML('');
   von_time.value = '';
   bis_time.value = '';
 });
 
+// Update the display when archived events are supposed to appear/disappear
 show_archive.addEventListener("change", function() {
   update();
 });
 
+// Check if a date is between two other dates, needed to find out if an event is supposed to be archived
 function isDateBetween(checkDate, startDate, endDate) {
  // Convert the string dates to Date objects
  var check = new Date(checkDate);
@@ -324,7 +338,7 @@ function isDateBetween(checkDate, startDate, endDate) {
  return check > start && check < end;
 }
 
-// check the dates to see if they belong in the archive
+// Check the dates to see if they belong in the archive
 function check_dates() {
   var change = false;
   arrallevents.forEach(function(event) {
@@ -340,13 +354,13 @@ function check_dates() {
   });
   if (change) {
      update();
-//     write_into_json();
   }
 }
 
-// check every ten seconds, can be expanded
+// Check every ten seconds, can be expanded, TODO might change the entire system
 setInterval(check_dates, 10000);
 
+// Pin an event (mark it as pinned, will take effect only on the frontend)
 function pin(checkbox) {
   // Loop through all the elements in arrallevents and see if they match with the button
   for (var i = 0; i < arrallevents.length; i++) {
