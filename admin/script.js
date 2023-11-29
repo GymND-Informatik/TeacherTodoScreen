@@ -289,7 +289,7 @@ jsonBtn.addEventListener("click", function() {
     return;
   }
   var current_date = new Date();
-  if (bis_ <= current_date || von_ <= current_date) {
+  if (bis_ <= current_date - 5 * 60 * 1000 || von_ <= current_date + 5 * 60 * 1000) {
     alert("Das Enddatum und das Begindatum muss in der Zukunft sein!");
     return;
   }
@@ -304,7 +304,7 @@ jsonBtn.addEventListener("click", function() {
     alert("Der Text darf nicht länger als 1000 Zeichen sein!");
     return;
   }
-  if ((data.text.match(/\n/g) || '').length + 1 > ZEILEN_LIMIT) {
+  if ((quill.getText().match(/\n/g) || '').length + 1 > ZEILEN_LIMIT) {
     alert("Der Text darf nicht mehr als 7 Zeilen haben!");
     return;
   }

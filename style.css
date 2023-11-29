@@ -63,7 +63,7 @@ h1 {
   width: 100vh;
   height: 400px;
   top: 0;
-  left: -165px;
+  left: -260px;
   position: absolute;
 }
 
@@ -73,7 +73,7 @@ h2 {
   padding-top: 6px;
   padding-bottom: 0px;
   letter-spacing: -0.01em;
-  font-size: 1.8rem;
+  font-size: 4rem;
   margin: 0;
   text-transform: capitalize;
 
@@ -84,7 +84,7 @@ p {
   /* font-family: 'badSchoolFontDINNextN0Light'; */
   font-weight: normal;
   margin: 0rem 0rem 0.6rem 0rem;
-  font-size: 1.2rem;
+  font-size: 2.4rem;
   line-height: 1.085em;
 }
 
