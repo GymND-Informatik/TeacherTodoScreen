@@ -85,9 +85,9 @@ input[type="datetime-local"],
   max-width: 500px;
   margin: 2rem auto;
 }
-
+input[type="text"],
 input[type="datetime-local"] {
-  color: #00000f;
+  color: var(--main-font-color);
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -97,9 +97,9 @@ input[type="datetime-local"] {
 
 input[type="text"]:focus,
 input[type="datetime-local"]:focus {
-input::placeholder {
   /* Placeholder styles here */
-}
+  /* Add your styles here */
+  
 }
 
 input::placeholder,
