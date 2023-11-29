@@ -358,7 +358,7 @@ function check_dates() {
 }
 
 // Check every ten seconds, can be expanded, TODO might change the entire system
-setInterval(check_dates, 10000);
+// setInterval(check_dates, 10000);
 
 // Pin an event (mark it as pinned, will take effect only on the frontend)
 function pin(checkbox) {

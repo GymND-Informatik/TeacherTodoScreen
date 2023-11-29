@@ -271,6 +271,7 @@ input[type="datetime-local"],
   border-radius: var(--border-radius);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   transition: transform var(--transition-speed);
+  overflow-wrap: break-word;
 }
 
 #text_container p {
@@ -359,4 +360,45 @@ input[type="range"]::-webkit-slider-thumb {
 
 .small-text {
 	font-size: 14px;
+}
+
+label[for="archiv_anzeigen"] {
+  font-size: 16px; /* Adjust font size */
+  font-weight: var(--font-bold); /* Use bold font */
+  color: var(--main-font-color); /* Use main font color */
+  margin-bottom: 5px; /* Space below the label */
+}
+
+/* Custom style for the checkbox */
+input[type="checkbox"] {
+  -webkit-appearance: none; /* Remove default appearance */
+  -moz-appearance: none; /* Remove default appearance */
+  appearance: none; /* Remove default appearance */
+  width: 20px; /* Width of the checkbox */
+  height: 20px; /* Height of the checkbox */
+  background-color: #fff; /* Background color */
+  border-radius: var(--border-radius); /* Rounded corners */
+  border: 2px solid var(--main-accent-color); /* Border color */
+  cursor: pointer; /* Cursor pointer */
+  position: relative; /* Position relative for pseudo-elements */
+  vertical-align: middle; /* Align with the label */
+  margin-right: 10px; /* Space to the right */
+}
+
+/* Style when the checkbox is checked */
+input[type="checkbox"]:checked {
+  background-color: var(--main-accent-color); /* Background color when checked */
+}
+
+/* Custom checkmark using pseudo-element */
+input[type="checkbox"]:checked::after {
+  content: ''; /* Required for pseudo-elements */
+  position: absolute; /* Absolute positioning inside the checkbox */
+  left: 6px; /* Horizontal position */
+  top: 2px; /* Vertical position */
+  width: 6px; /* Width of the checkmark */
+  height: 10px; /* Height of the checkmark */
+  border: solid white; /* Color of the checkmark */
+  border-width: 0 2px 2px 0; /* Thickness of the checkmark */
+  transform: rotate(45deg); /* Rotate to look like a checkmark */
 }
