@@ -27,7 +27,7 @@ function isDateBetween(checkDate, startDate, endDate) {
 // Function to fetch data and process events
 function fetchData() {
   allElements = [];
-  fetch('readFile.php')
+  fetch('output.json')
     .then(response => response.text())
     .then(data => {
       var _events = JSON.parse(data);
