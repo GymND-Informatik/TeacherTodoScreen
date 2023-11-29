@@ -8,6 +8,7 @@ var bis_time = document.getElementById("bis_time");
 var jsonBtn = document.getElementById("jsonbtn");
 var all_events = document.getElementById("displayallevents");
 var show_archive = document.getElementById("archiv_anzeigen");
+var sofort = document.getElementById("sofort");
 
 const ZEICHEN_LIMIT = 1000;
 const ZEILEN_LIMIT = 10;
@@ -371,3 +372,17 @@ function pin(checkbox) {
   }
   write_into_json();
 }
+
+sofort.addEventListener("click", function() {
+  const currentDateUTC = new Date();
+
+  // Convert UTC time to local time
+  const localTime = currentDateUTC.getTime() - (currentDateUTC.getTimezoneOffset() * 60000);
+  const currentDateLocal = new Date(localTime);
+
+  // Format the date as required by datetime-local input (YYYY-MM-DDTHH:MM)
+  const dateString = currentDateLocal.toISOString().substring(0, 16);
+
+  // Set the value of the datetime input
+  von_time.value = dateString;
+});
