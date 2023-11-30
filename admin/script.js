@@ -87,7 +87,7 @@ function write_into_json() {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(arrallevents)
+    body: JSON.stringify(temp)
   })
     .then(response => response.text())
     .then(data => {
