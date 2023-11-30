@@ -8,6 +8,7 @@
 - [x] Editor im Backend
 - [x] 4/6 Kästchen Layout
 - [x] Anheften - Wichtiges kann angeheftet werden
-- [ ] Backend: Zeit zum Blättern einschalten BIG TODO
+- [x] Backend: Zeit zum Blättern einschalten BIG TODO
 - [x] Editieren Datum-Zeile soll entfernt werden
+- [ ] CSS styling 
 
