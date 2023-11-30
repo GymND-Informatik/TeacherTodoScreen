@@ -7,11 +7,12 @@ var von_time = document.getElementById("von_time");
 var bis_time = document.getElementById("bis_time");
 var jsonBtn = document.getElementById("jsonbtn");
 var all_events = document.getElementById("displayallevents");
-var show_archive = document.getElementById("archiv_anzeigen");
 var sofort = document.getElementById("sofort");
+var dropdown = document.getElementById("page-turn");
+var interval_button = document.getElementById("submit_interval");
 
 const ZEICHEN_LIMIT = 1000;
-const ZEILEN_LIMIT = 10;
+const ZEILEN_LIMIT = 20;
 
 // ----------------------------------------------------
 
@@ -46,6 +47,14 @@ read_json();
 
 // -------------------------------------------------------
 
+interval_button.addEventListener('click', function() {   
+  console.log(dropdown.value);
+  for (var i = 0; i < arrallevents.length; i++) {
+    arrallevents[i].page_turn = dropdown.value;
+  }
+  write_into_json();
+});
+
 // Funtion to read the json file and update the arrallevents array 
 function read_json() {
   fetch('readFile.php')
@@ -60,12 +69,6 @@ function read_json() {
     .catch(error => {
       console.error('Error:', error);
     });
-}
-
-// Still TODO 
-function upload_change_interval() {
-  // TODO this wont work might have to go for another php nightmare trip
-  localStorage.setItem('change_interval', change_interval);
 }
 
 // Pad a number with zeroes in front (used for dates)
@@ -171,7 +174,6 @@ function update() {
   arrallevents.forEach(function(arrayItem) { 
     var x = arrayItem;
     
-   if ((x.archived && show_archive.checked) || !x.archived) {
     var von_ = new Date(x.von);
     var bis_ = new Date(x.bis);
 
@@ -187,10 +189,6 @@ function update() {
       "<div class='event_div'>" +
       "<p class='event'><b><font size=5>" +
       x.event;
-
-    if (x.archived === true) {
-        event_string += " [ARCHIVIERT]";
-    }
 
     event_string += "</font></b>";
 
@@ -225,7 +223,6 @@ function update() {
     event_string +=
        ">" +
        "</div>\n";
-    }
   });
 
 //  console.log('events_string', event_string);
@@ -264,8 +261,8 @@ jsonBtn.addEventListener("click", function() {
     "text": text,
     "von": von_time.value,
     "bis": bis_time.value,
-    "archived": false,
-    "pinned": false
+    "pinned": false,
+    "page-turn": dropdown.value
   }
 
 	// SAFEGUARDS
@@ -289,7 +286,7 @@ jsonBtn.addEventListener("click", function() {
     return;
   }
   var current_date = new Date();
-  if (bis_ <= current_date || von_ <= current_date) {
+  if (bis_ <= current_date - 1 * 60 * 1000 || von_ <= current_date + 1 * 60 * 1000) {
     alert("Das Enddatum und das Begindatum muss in der Zukunft sein!");
     return;
   }
@@ -304,7 +301,7 @@ jsonBtn.addEventListener("click", function() {
     alert("Der Text darf nicht länger als 1000 Zeichen sein!");
     return;
   }
-  if ((data.text.match(/\n/g) || '').length + 1 > ZEILEN_LIMIT) {
+  if ((quill.getText().match(/\n/g) || '').length + 1 > ZEILEN_LIMIT) {
     alert("Der Text darf nicht mehr als 7 Zeilen haben!");
     return;
   }
@@ -323,12 +320,7 @@ jsonBtn.addEventListener("click", function() {
   bis_time.value = '';
 });
 
-// Update the display when archived events are supposed to appear/disappear
-show_archive.addEventListener("change", function() {
-  update();
-});
-
-// Check if a date is between two other dates, needed to find out if an event is supposed to be archived
+// Check if a date is between two other dates, needed to find out if an event is supposed to be deleted
 function isDateBetween(checkDate, startDate, endDate) {
  // Convert the string dates to Date objects
  var check = new Date(checkDate);
@@ -339,27 +331,34 @@ function isDateBetween(checkDate, startDate, endDate) {
  return check > start && check < end;
 }
 
-// Check the dates to see if they belong in the archive
+// Check the dates to see if they belong into oblivion
 function check_dates() {
   var change = false;
-  arrallevents.forEach(function(event) {
-     var current = new Date();
-     if (isDateBetween(current, event.von, event.bis)) {
-       event.archived = false;
-     }
-     else {
-       event.archived = true;
+  for (var i = 0; i < arrallevents.length; i++) {
+     var event = arrallevents[i];
+     // WARNING: since time is different on pi this might pose a problem
+     var currentDateUTC = new Date();
+     const localTime = currentDateUTC.getTime() - (currentDateUTC.getTimezoneOffset() * 60000);
+     var date = new Date(currentDateUTC);
+     var event_date = new Date(event.bis);
+     if (date >= event_date) {
+       arrallevents.splice(i, 1);
+       update();
+       aae_index--;
        change = true;
+       // Break the loop
+       break;
      }
 //     console.log(event, current, event.von, event.bis, isDateBetween(current, event.von, event.bis));
-  });
+  }
   if (change) {
      update();
+     write_into_json();
   }
 }
 
 // Check every ten seconds, can be expanded, TODO might change the entire system
-// setInterval(check_dates, 10000);
+setInterval(check_dates, 5000);
 
 // Pin an event (mark it as pinned, will take effect only on the frontend)
 function pin(checkbox) {
