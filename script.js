@@ -6,7 +6,7 @@ let page = 0;
 const ELEMENTSPERPAGE = 2;
 let page_turn_interval = undefined;
 var counter = 0;
-
+var refreshInterval = 0;
 // Function to pad a number with leading zeros
 function pad(num, size) {
   num = num.toString();
