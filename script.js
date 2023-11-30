@@ -3,7 +3,7 @@ const events = document.getElementById("events");
 const pageElement = document.getElementById("page");
 let allElements = [];
 let page = 0;
-const ELEMENTSPERPAGE = 4;
+const ELEMENTSPERPAGE = 2;
 let page_turn_interval = undefined;
 var counter = 0;
 
