@@ -81,7 +81,7 @@ function pad(num, size) {
 // Write it into a simple JSON file server-side called output.json
 function write_into_json() {
 //  console.log(JSON.stringify(arrallevents));
-	const temp = [{'page_turn': dropdown.value}, ...arrallevents];
+	const temp = [dropdown.value, ...arrallevents];
   fetch("saveFile.php", {
     method: "POST",
     headers: {
