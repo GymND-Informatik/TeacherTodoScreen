@@ -81,6 +81,7 @@ function pad(num, size) {
 // Write it into a simple JSON file server-side called output.json
 function write_into_json() {
 //  console.log(JSON.stringify(arrallevents));
+arrallevents['page_turn'] = dropdown.value;
   fetch("saveFile.php", {
     method: "POST",
     headers: {
@@ -255,14 +256,12 @@ jsonBtn.addEventListener("click", function() {
   text = modifyQuillHTML(text);
 
   // console.log('quill output', text);
-  var data =
-  {
-    "event": _event.value,
-    "text": text,
-    "von": von_time.value,
-    "bis": bis_time.value,
-    "pinned": false,
-    "page-turn": dropdown.value
+  var data = {
+    event: _event.value,
+    text: text,
+    von: von_time.value,
+    bis: bis_time.value,
+    pinned: false 
   }
 
 	// SAFEGUARDS
