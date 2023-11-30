@@ -9,6 +9,7 @@ var jsonBtn = document.getElementById("jsonbtn");
 var all_events = document.getElementById("displayallevents");
 var sofort = document.getElementById("sofort");
 var dropdown = document.getElementById("page-turn");
+var interval_button = document.getElementById("submit_interval");
 
 const ZEICHEN_LIMIT = 1000;
 const ZEILEN_LIMIT = 20;
@@ -46,6 +47,14 @@ read_json();
 
 // -------------------------------------------------------
 
+interval_button.addEventListener('click', function() {   
+  console.log(dropdown.value);
+  for (var i = 0; i < arrallevents.length; i++) {
+    arrallevents[i].page_turn = dropdown.value;
+  }
+  write_into_json();
+});
+
 // Funtion to read the json file and update the arrallevents array 
 function read_json() {
   fetch('readFile.php')
@@ -60,12 +69,6 @@ function read_json() {
     .catch(error => {
       console.error('Error:', error);
     });
-}
-
-// Still TODO 
-function upload_change_interval() {
-  // TODO this wont work might have to go for another php nightmare trip
-  localStorage.setItem('change_interval', change_interval);
 }
 
 // Pad a number with zeroes in front (used for dates)
@@ -245,13 +248,6 @@ function modifyQuillHTML(htmlContent) {
 
   return modifiedHTML;
 }
-
-dropdown.addEventListener("change", function() {
-  for (var i = 0; i < arrallevents.length; i++) {
-    arrallevents[i].page_turn = dropdown.value;
-  }
-  write_into_json();
-});
 
 // The "hochladen" button, used to add new events
 jsonBtn.addEventListener("click", function() {
