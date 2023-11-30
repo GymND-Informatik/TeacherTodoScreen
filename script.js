@@ -47,23 +47,20 @@ function fetchData() {
             allElements.push(element); 
           }
 
-	  // Haters are gonna call this lazy (don't mind them)
+	  // Haters are gonna call this lazy (they have no idea)
+	  setInterval(runRefresh, parseInt(event.page_turn) * 1000);
         }
       });
     })
     .catch(error => {
       console.error('Error:', error);
     });
-
-  runRefresh();
 }
 
 // Initial fetch of data
 fetchData();
-
 // Set intervals for refreshing data and fetching new data
-setInterval(runRefresh, page_turn_interval);
-setInterval(fetchData, 2000);
+setInterval(fetchData, 1000);
 
 // Function to append elements to the events container
 function appendElements(lst) {
