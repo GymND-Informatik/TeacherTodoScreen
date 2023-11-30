@@ -30,29 +30,35 @@
     <button id='submit_interval'>Hochladen</button>
   </div>
 
-  <div class="form-container">
-    <label for="event">Event:</label>
-    <input id="event" type="text" placeholder="Geben Sie den Eventnamen ein...">
-
-
-    <label for="text">Text:</label>
-    <div id="editor-container">
-      <div id="editor"></div>
+  <div class="container">
+   
+    <div class="form-container">
+      <label for="event">Event:</label>
+      <input id="event" type="text" placeholder="Geben Sie den Eventnamen ein...">
+  
+  
+      <label for="text">Text:</label>
+      <div id="editor-container">
+        <div id="editor"></div>
+      </div>
+      <!-- <textarea id="text" placeholder="Beschreiben Sie das Event..."></textarea> -->
+  
+      <label for="von_time">Von:</label>
+      <input type="datetime-local" id="von_time" placeholder="Startdatum und -zeit">
+      <button id="sofort">Sofort</button>
+  
+      <label for="bis_time">Bis:</label>
+      <input type="datetime-local" id="bis_time" placeholder="Enddatum und -zeit">
+  
+      <button id="jsonbtn">Hochladen</button>
     </div>
-    <!-- <textarea id="text" placeholder="Beschreiben Sie das Event..."></textarea> -->
+   
+    <div class="form-container">
+      <p id="displayallevents"></p>
+    </div>
 
-    <label for="von_time">Von:</label>
-    <input type="datetime-local" id="von_time" placeholder="Startdatum und -zeit">
-    <button id="sofort">Sofort</button>
-
-    <label for="bis_time">Bis:</label>
-    <input type="datetime-local" id="bis_time" placeholder="Enddatum und -zeit">
-
-    <button id="jsonbtn">Hochladen</button>
-
-    <p id="displayallevents"></p>
   </div>
-
+  
   <script src="script.js"></script>
 
 </body>

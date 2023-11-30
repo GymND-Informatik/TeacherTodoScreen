@@ -25,6 +25,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  display: flex;
 }
 
 .logo-container {
@@ -82,9 +83,55 @@ input[type="datetime-local"],
 
 .form-container {
   padding: 25px;
-  max-width: 500px;
-  margin: 2rem auto;
+  max-width: 470px;
+  width: 100%;
+  min-width: 470px;
+  margin: 2rem auto; /* Adjust margin for vertical and right alignment */
 }
+
+/* Container styles */
+.container {
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
+  padding: 210px; /* Add padding for space from the right edge */
+  position: relative;
+}
+
+/* General styles for form containers */
+.form-container {
+  background: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  transition: transform var(--transition-speed);
+  padding: 25px;
+  max-width: 470px;
+  width: 100%;
+  min-width: 470px;
+  margin: 2rem 1rem; /* Adjust margin as needed */
+}
+
+/* Styles for the second form container */
+.form-container.display-container {
+  background: rgba(200, 200, 200, 0.24); /* Example different background color */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack containers on small screens */
+  }
+
+  .form-container {
+    margin: 2rem auto; /* Adjust margin for centered stacking */
+  }
+
+  
+}
+
+
 input[type="text"],
 input[type="datetime-local"] {
   color: var(--main-font-color);
@@ -101,6 +148,9 @@ input[type="datetime-local"]:focus {
   /* Add your styles here */
   
 }
+
+
+
 
 input::placeholder,
 .ql-editor::placeholder {}
