@@ -62,7 +62,7 @@ function read_json() {
     .then(data => {
       // console.log(data); // Log the content of the file
       loaded_events = data;
-      arrallevents = JSON.parse(loaded_events);
+      arrallevents = JSON.parse(loaded_events).slice(1);
       aae_index = arrallevents.length;
       update();
     })
