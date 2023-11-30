@@ -3,8 +3,8 @@ const events = document.getElementById("events");
 const pageElement = document.getElementById("page");
 let allElements = [];
 let page = 0;
-const ELEMENTSPERPAGE = 6;
-let change_interval = 10000;
+const ELEMENTSPERPAGE = 4;
+let page_turn_interval = 5000;
 
 // Function to pad a number with leading zeros
 function pad(num, size) {
@@ -46,22 +46,21 @@ function fetchData() {
           } else { 
             allElements.push(element); 
           }
+
+	  // Haters are gonna call this lazy (they have no idea)
+	  setInterval(runRefresh, parseInt(event.page_turn) * 1000);
         }
       });
     })
     .catch(error => {
       console.error('Error:', error);
     });
-
-  runRefresh();
 }
 
 // Initial fetch of data
 fetchData();
-
 // Set intervals for refreshing data and fetching new data
-setInterval(runRefresh, 5000);
-setInterval(fetchData, 2000);
+setInterval(fetchData, 1000);
 
 // Function to append elements to the events container
 function appendElements(lst) {
@@ -72,7 +71,8 @@ function appendElements(lst) {
 
 // Function to refresh the displayed events
 function runRefresh() {
-  if (page * ELEMENTSPERPAGE + 1 > allElements.length) {
+  console.log(allElements);
+  if (page * ELEMENTSPERPAGE >= allElements.length) {
     page = 0;
     return;
   }
