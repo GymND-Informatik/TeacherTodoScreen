@@ -49,11 +49,11 @@ function fetchData() {
           } else allElements.push(element); 
         }
       });
-	if (page_turn_interval === undefined) {
-	  page_turn_interval = data[0] * 1000;
-		runRefresh();
-		setInterval(runRefresh, page_turn_interval);
-	}
+   if (page_turn_interval === undefined || page_turn_interval !== data[0] * 1000) {
+        page_turn_interval = data[0] * 1000;
+        clearInterval(refreshInterval); // Clear the previous interval
+        runRefresh(); // Run immediately with the new interval
+        refreshInterval = setInterval(runRefresh, page_turn_interval); // Set the new interval
     })
     .catch(error => {
       console.error('Error:', error);
