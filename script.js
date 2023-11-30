@@ -4,7 +4,7 @@ const pageElement = document.getElementById("page");
 let allElements = [];
 let page = 0;
 const ELEMENTSPERPAGE = 4;
-let page_turn_interval = 1000;
+let page_turn_interval = undefined;
 var counter = 0;
 
 // Function to pad a number with leading zeros
@@ -29,9 +29,11 @@ function isDateBetween(checkDate, startDate, endDate) {
 function fetchData() {
   fetch('output.json')
     .then(response => response.text())
-    .then(data => {
+    .then(_data => {
       allElements = [];
-      var _events = JSON.parse(data);
+	const data = JSON.parse(_data);
+      var _events = data.slice(1);
+	
       _events.forEach((event) => {
         if (isDateBetween(new Date(), event.von, event.bis)) {
           var text = event.text.replace(/\n/g, '<br>');
@@ -41,17 +43,17 @@ function fetchData() {
           element.innerHTML = `${heading}${text}`;
           element.classList.add("event");
 
-          if (event.pinned) { 
+          if (event.pinned) {
             element.classList.add("pinned"); 
             allElements.unshift(element); 
-          } else { 
-            allElements.push(element); 
-          }
-
-	  // Haters are gonna call this lazy (they have no idea)
-	  page_turn_interval = parseInt(event.page_turn) * 1000;
+          } else allElements.push(element); 
         }
       });
+	if (page_turn_interval === undefined) {
+	  page_turn_interval = data[0] * 1000;
+		runRefresh();
+		setInterval(runRefresh, page_turn_interval);
+	}
     })
     .catch(error => {
       console.error('Error:', error);
@@ -59,25 +61,11 @@ function fetchData() {
 
 }
 
-
-function check_refresh() {
-//  console.log(counter, page_turn_interval);
-  if (counter >= page_turn_interval) { 
-//    console.log('refreshing at', counter);
-    runRefresh();
-    counter = 0;
-  }
-
-  counter += 1000;
-}
-
 // Initial fetch of data
 // fetchData();
 // Set intervals for refreshing data and fetching new data
 
 setInterval(fetchData, 5000);
-runRefresh();
-setInterval(check_refresh, 1000);
 
 // Function to append elements to the events container
 function appendElements(lst) {

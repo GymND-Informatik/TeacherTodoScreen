@@ -10,5 +10,5 @@
 - [x] Anheften - Wichtiges kann angeheftet werden
 - [x] Backend: Zeit zum Blättern einschalten BIG TODO
 - [x] Editieren Datum-Zeile soll entfernt werden
-- [ ] CSS styling 
+- [ ] CSS styling test
 
