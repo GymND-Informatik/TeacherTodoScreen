@@ -3,7 +3,7 @@ const events = document.getElementById("events");
 const pageElement = document.getElementById("page");
 let allElements = [];
 let page = 0;
-const ELEMENTSPERPAGE = 4;
+const ELEMENTSPERPAGE = 2;
 let page_turn_interval = undefined;
 var counter = 0;
 
@@ -49,11 +49,11 @@ function fetchData() {
           } else allElements.push(element); 
         }
       });
-	if (page_turn_interval === undefined) {
-	  page_turn_interval = data[0] * 1000;
-		runRefresh();
-		setInterval(runRefresh, page_turn_interval);
-	}
+   if (page_turn_interval === undefined || page_turn_interval !== data[0] * 1000) {
+        page_turn_interval = data[0] * 1000;
+        clearInterval(refreshInterval); // Clear the previous interval
+        runRefresh(); // Run immediately with the new interval
+        refreshInterval = setInterval(runRefresh, page_turn_interval); // Set the new interval
     })
     .catch(error => {
       console.error('Error:', error);
@@ -79,7 +79,7 @@ function runRefresh() {
 //  console.log(allElements);
   if (page * ELEMENTSPERPAGE >= allElements.length) {
     page = 0;
-    return;
+    return runRefresh();
   }
   events.innerHTML = "";
   if (allElements.length === 0) return;
