@@ -79,7 +79,7 @@ function runRefresh() {
 //  console.log(allElements);
   if (page * ELEMENTSPERPAGE >= allElements.length) {
     page = 0;
-    return;
+    return runRefresh();
   }
   events.innerHTML = "";
   if (allElements.length === 0) return;
