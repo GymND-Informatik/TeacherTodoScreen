@@ -1,6 +1,5 @@
 // Initiate all variables
 var arrallevents = [];
-var aae_index = 0;
 
 var _event = document.getElementById("event");
 var von_time = document.getElementById("von_time");
@@ -10,9 +9,7 @@ var all_events = document.getElementById("displayallevents");
 var sofort = document.getElementById("sofort");
 var dropdown = document.getElementById("page-turn");
 var interval_button = document.getElementById("submit_interval");
-
-const ZEICHEN_LIMIT = 1000;
-const ZEILEN_LIMIT = 20;
+var change_interval = 5;
 
 // ----------------------------------------------------
 
@@ -39,32 +36,36 @@ var quill = new Quill('#editor', {
 // Load all the events from the JSON file into the array  (hard coded to know if php failed)
 var loaded_events = '[{"event":"PHP Loading Failed Mad ","text":"","von":"2023-11-08T00:00","bis":"2023-11-08T23:59"}]';
 arrallevents = JSON.parse(loaded_events);
-aae_index = arrallevents.length;
 update();
 
 // Read the JSON, hope it works
-read_json();
+read_json(true);
 
 // -------------------------------------------------------
 
+
 interval_button.addEventListener('click', function() {   
   console.log(dropdown.value);
-  for (var i = 0; i < arrallevents.length; i++) {
-    arrallevents[i].page_turn = dropdown.value;
-  }
+  //for (var i = 0; i < arrallevents.length; i++) {
+    //arrallevents[i].page_turn = dropdown.value;
+  //}
+  change_interval = dropdown.value;
   write_into_json();
 });
 
 // Funtion to read the json file and update the arrallevents array 
-function read_json() {
-  fetch('readFile.php')
+function read_json(_update) {
+  fetch('../output.json')
     .then(response => response.text())
     .then(data => {
-      // console.log(data); // Log the content of the file
+      console.log("1 begin fetch");
+      console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
       arrallevents = JSON.parse(loaded_events).slice(1);
-      aae_index = arrallevents.length;
-      update();
+      console.log('3 fetched into array', arrallevents);
+      if (_update) { update();}
+      console.log("4 end fetch");
+
     })
     .catch(error => {
       console.error('Error:', error);
@@ -80,8 +81,8 @@ function pad(num, size) {
 
 // Write it into a simple JSON file server-side called output.json
 function write_into_json() {
-//  console.log(JSON.stringify(arrallevents));
-	const temp = [dropdown.value, ...arrallevents];
+  console.log(change_interval, JSON.stringify(arrallevents));
+	const temp = [change_interval, ...arrallevents];
   fetch("saveFile.php", {
     method: "POST",
     headers: {
@@ -100,18 +101,34 @@ function write_into_json() {
 
 // Delete an event (will be activated on_click)
 function button_delete(button) {
+
+fetch('../output.json')
+    .then(response => response.text())
+    .then(data => {
+      console.log("1 begin fetch");
+      console.log("2 raw", data); // Log the content of the file
+      loaded_events = data;
+      arrallevents = JSON.parse(loaded_events).slice(1);
+      console.log('3 fetched into array', arrallevents);
+      console.log("4 end fetch");
+
   // Loop through all the elements in arrallevents and see if they match with the button
   for (var i = 0; i < arrallevents.length; i++) {
     if (arrallevents[i].event == button.name) {
       // If they match, delete the element and rerender
       arrallevents.splice(i, 1);
       update();
-      aae_index--;
       // Break the loop
       break;
     }
   }
   write_into_json();
+
+
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
 
 // Sanitize HTML (good practice)
@@ -134,6 +151,17 @@ function cleanQuillHTML(html) {
 // Will delete the old event and put the current data into the input fields
 function button_edit(button) {
   // Loop through all the elements in arrallevents and see if they match with the button
+  fetch('../output.json')
+    .then(response => response.text())
+    .then(data => {
+      console.log("1 begin fetch");
+      console.log("2 raw", data); // Log the content of the file
+      loaded_events = data;
+      arrallevents = JSON.parse(loaded_events).slice(1);
+      console.log('3 fetched into array', arrallevents);
+      console.log("4 end fetch");
+
+
   for (var i = 0; i < arrallevents.length; i++) {
     if (arrallevents[i].event == button.name) {
       // If they match, delete the element and rerender
@@ -159,18 +187,24 @@ function button_edit(button) {
 
 			// Delete it from the arrallevents
       arrallevents.splice(i, 1);
-      update();
-      aae_index--;
       // Break the loop
       break;
     }
   }
   write_into_json();
+     update();
+
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
 
 // Update the HTML doc to display all the existing events
 function update() {
   // Display all the existent events in a buffer
+
+  // TODO display order
   var event_string = '';
   arrallevents.forEach(function(arrayItem) { 
     var x = arrayItem;
@@ -226,6 +260,7 @@ function update() {
        "</div>\n";
   });
 
+  console.log("7 rendered", arrallevents);
 //  console.log('events_string', event_string);
   all_events.innerHTML = event_string;
 }
@@ -252,71 +287,78 @@ function modifyQuillHTML(htmlContent) {
 
 // The "hochladen" button, used to add new events
 jsonBtn.addEventListener("click", function() {
-  var text = getContentAsHTML();
-  text = modifyQuillHTML(text);
+    fetch('../output.json')
+    .then(response => response.text())
+    .then(data => {
+      console.log("1 begin fetch");
+      console.log("2 raw", data); // Log the content of the file
+      loaded_events = data;
+      arrallevents = JSON.parse(loaded_events).slice(1);
+      console.log('3 fetched into array', arrallevents);
+      console.log("4 end fetch");
+      console.log('5 read', arrallevents);
+      var text = getContentAsHTML();
+      text = modifyQuillHTML(text);
 
-  // console.log('quill output', text);
-  var data = {
-    event: _event.value,
-    text: text,
-    von: von_time.value,
-    bis: bis_time.value,
-    pinned: false 
-  }
+    // console.log('quill output', text);
+    var data = {
+      event: _event.value,
+      text: text,
+      von: von_time.value,
+      bis: bis_time.value,
+      pinned: false,
+      large: false
+    }
 
 	// SAFEGUARDS
-  if (_event.value.includes("'")) {
-    alert("Das Zeichen ' darf nicht im Eventnamen sein!");
-    return;
-  }
-  if (_event.value == "") {
-    alert("Kein Event angegeben!");
-    return;
-  }
-  if (!(isNaN(von_time.value) && isNaN(bis_time.value))) {
-    alert("Datum muss angegeben sein!");
-    return;
-  }
-  // Check for time travelling
-  var von_ = new Date(von_time.value);
-  var bis_ = new Date(bis_time.value);
-  if (bis_ <= von_) {
-    alert("Das Enddatum muss später als das Startdatum sein!");
-    return;
-  }
-  var current_date = new Date();
-  if (bis_ <= current_date - 1 * 60 * 1000 || von_ <= current_date + 1 * 60 * 1000) {
-    alert("Das Enddatum und das Begindatum muss in der Zukunft sein!");
-    return;
-  }
-  for (var i = 0; i < arrallevents.length; i++) {
-    if (arrallevents[i].event == data.event) {
-      alert("Nicht dasselbe Event zweimal eintragen!");
+    if (_event.value.includes("'")) {
+      alert("Das Zeichen ' darf nicht im Eventnamen sein!");
       return;
     }
-  }
-  // Character limit 
-  if (quill.getText().length > ZEICHEN_LIMIT) {
-    alert("Der Text darf nicht länger als 1000 Zeichen sein!");
-    return;
-  }
-  if ((quill.getText().match(/\n/g) || '').length + 1 > ZEILEN_LIMIT) {
-    alert("Der Text darf nicht mehr als 7 Zeilen haben!");
-    return;
-  }
-  
-  // Write it in
-  arrallevents[aae_index++] = data;
-
+    if (_event.value == "") {
+      alert("Kein Event angegeben!");
+      return;
+    }
+    if (!(isNaN(von_time.value) && isNaN(bis_time.value))) {
+      alert("Datum muss angegeben sein!");
+      return;
+    }
+    // Check for time travelling
+    var von_ = new Date(von_time.value);
+    var bis_ = new Date(bis_time.value);
+    if (bis_ <= von_) {
+      alert("Das Enddatum muss später als das Startdatum sein!");
+      return;
+    }
+    var current_date = new Date();
+    if (bis_ <= current_date - 1 * 60 * 1000 || von_ <= current_date + 1 * 60 * 1000) {
+      alert("Das Enddatum und das Begindatum muss in der Zukunft sein!");
+      return;
+    }
+    for (var i = 0; i < arrallevents.length; i++) {
+      if (arrallevents[i].event == data.event) {
+        alert("Nicht dasselbe Event zweimal eintragen!");
+        return;
+      }
+    }
+ 
+    // Write it in
+    arrallevents.push(data);
+    console.log("6 Pushed data", arrallevents);
 	// Update the display and update the output file
-  update();
-  write_into_json();
+    update();
+    write_into_json();
+    console.log("8 written into json", arrallevents);
 
-	// Clear the inputs
-  _event.value = '';
-  quill.clipboard.dangerouslyPasteHTML('');
-  von_time.value = '';
-  bis_time.value = '';
+ 	// Clear the inputs
+    _event.value = '';
+    quill.clipboard.dangerouslyPasteHTML('');
+    von_time.value = '';
+    bis_time.value = '';
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 });
 
 // Check if a date is between two other dates, needed to find out if an event is supposed to be deleted
@@ -331,7 +373,17 @@ function isDateBetween(checkDate, startDate, endDate) {
 }
 
 // Check the dates to see if they belong into oblivion
-function check_dates() {
+function check_events() {
+fetch('../output.json')
+    .then(response => response.text())
+    .then(data => {
+      console.log("1 begin fetch");
+      console.log("2 raw", data); // Log the content of the file
+      loaded_events = data;
+      arrallevents = JSON.parse(loaded_events).slice(1);
+      console.log('3 fetched into array', arrallevents);
+     console.log("4 end fetch");
+
   var change = false;
   for (var i = 0; i < arrallevents.length; i++) {
      var event = arrallevents[i];
@@ -343,7 +395,6 @@ function check_dates() {
      if (date >= event_date) {
        arrallevents.splice(i, 1);
        update();
-       aae_index--;
        change = true;
        // Break the loop
        break;
@@ -354,13 +405,31 @@ function check_dates() {
      update();
      write_into_json();
   }
+
+  update();
+
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
 
 // Check every ten seconds, can be expanded, TODO might change the entire system
-setInterval(check_dates, 5000);
+setInterval(check_events, 5000);
 
 // Pin an event (mark it as pinned, will take effect only on the frontend)
 function pin(checkbox) {
+
+fetch('../output.json')
+    .then(response => response.text())
+    .then(data => {
+      console.log("1 begin fetch");
+      console.log("2 raw", data); // Log the content of the file
+      loaded_events = data;
+      arrallevents = JSON.parse(loaded_events).slice(1);
+      console.log('3 fetched into array', arrallevents);
+      console.log("4 end fetch");
+
   // Loop through all the elements in arrallevents and see if they match with the button
   for (var i = 0; i < arrallevents.length; i++) {
     if (arrallevents[i].event == checkbox.name) {
@@ -369,6 +438,11 @@ function pin(checkbox) {
     }
   }
   write_into_json();
+
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
 
 sofort.addEventListener("click", function() {
