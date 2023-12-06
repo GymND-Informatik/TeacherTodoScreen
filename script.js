@@ -31,9 +31,9 @@ function fetchData() {
     .then(response => response.text())
     .then(_data => {
       allElements = [];
-	const data = JSON.parse(_data);
+      const data = JSON.parse(_data);
       var _events = data.slice(1);
-	
+
       _events.forEach((event) => {
         if (isDateBetween(new Date(), event.von, event.bis)) {
           var text = event.text.replace(/\n/g, '<br>');
@@ -44,22 +44,23 @@ function fetchData() {
           element.classList.add("event");
 
           if (event.pinned) {
-            element.classList.add("pinned"); 
-            allElements.unshift(element); 
-          } else allElements.push(element); 
+            element.classList.add("pinned");
+            allElements.unshift(element);
+          } else allElements.push(element);
         }
       });
-   if (page_turn_interval === undefined || page_turn_interval !== data[0] * 1000) {
+      if (page_turn_interval === undefined || page_turn_interval !== data[0] * 1000) {
         page_turn_interval = data[0] * 1000;
         clearInterval(refreshInterval); // Clear the previous interval
         runRefresh(); // Run immediately with the new interval
         refreshInterval = setInterval(runRefresh, page_turn_interval); // Set the new interval
-    })
+      }
+    }) // <- Missing closing parenthesis here
     .catch(error => {
       console.error('Error:', error);
     });
-
 }
+
 
 // Initial fetch of data
 // fetchData();
