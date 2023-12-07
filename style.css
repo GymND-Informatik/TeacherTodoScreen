@@ -7,20 +7,12 @@
 
 @font-face {
   font-family: "DIN W02 Light";
-  src: url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.eot");
-  src: url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/1b59b45496869bb64487738165f9ba76.svg#DIN W02 Light")format("svg");
-}
-
-@font-face {
-  font-family: 'badSchoolFontDINNextN0Light';
-  src: url('Nachmittagsbetreuung woff (1)..woff') format('woff');
+  src: url('GymnasiumFontLight.woff') format('woff');
   font-weight: normal;
-
+  font-style: normal;
 }
+
+
 
 h1, h2 {
   font-family: badSchoolFontDIN1451W02Engschrift;
