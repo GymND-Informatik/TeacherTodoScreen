@@ -136,37 +136,15 @@ p {
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
   transition: transform var(--transition-speed);
-  position: fixed;
+  position: absolute;
   top: 1.2rem;
   right: 1.2rem;
   width: calc(50% - 8.4rem); /* Adjusted width */
   padding: 25px;
   overflow: scroll;
   z-index: 1;
-}
-
-/* Responsive styling for smaller screens */
-@media (max-width: 1000px) {
-  .wrapper {
-    flex-direction: column; /* Stack containers vertically */
-    align-items: center; /* Center the containers horizontally */
-    padding-left: 0; /* Remove additional padding if any */
-    padding-right: 0; /* Remove additional padding if any */
-  }
-
-  .form-container,
-  .form-container2 {
-    position: relative; /* Change position to relative */
-    left: auto;
-    right: auto;
-    width: 90%; /* Adjust width for mobile view */
-    margin: 10px auto; /* Added margin for spacing between containers */
-    top: auto;
-    bottom: auto;
-    overflow: visible; /* No internal scrolling */
-    height: auto; /* Adjust height as per content */
-    max-height: 100%; /* Ensure it doesn't exceed viewport height */
-  }
+  max-height: auto;
+  overflow-y: auto;
 }
 
 input[type="text"],
