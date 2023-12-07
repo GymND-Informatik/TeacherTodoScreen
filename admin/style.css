@@ -13,20 +13,20 @@
   --font-bold: 700;
 }
 @font-face {
-  font-family: 'badSchoolFontDIN1451W02Engschrift';
-  src: url('Gymnasium\ Neusiedl.woff') format('woff');
+  font-family: "badSchoolFontDIN1451W02Engschrift";
+  src: url("Gymnasium\ Neusiedl.woff") format("woff");
   font-style: normal;
 }
 
 @font-face {
   font-family: "DIN W02 Light";
-  src: url('GymnasiumFontLight.woff') format('woff');
+  src: url("GymnasiumFontLight.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 body {
   background: var(--placeholder-color);
-  font-family: 'badSchoolFontDIN1451W02Engschrift', "DIN W02 Light";
+  font-family: "badSchoolFontDIN1451W02Engschrift", "DIN W02 Light";
   padding: 20px;
   margin: 0;
   height: 100%;
@@ -38,8 +38,6 @@ body {
   background-position: center;
   font-size: 22px;
   letter-spacing: 0.025em;
-
-
 }
 
 .logo-container {
@@ -50,12 +48,13 @@ body {
   /* padding-right: 10px;
   padding-bottom: 10px;
   padding-top: 10px; */
-  background: rgba(121, 169, 135, 0.50);
+  background: rgba(121, 169, 135, 0.5);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
   border: 1px solid rgba(255, 255, 255, 0.27);
   border-radius: var(--border-radius);
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
   transition: transform var(--transition-speed);
 }
 
@@ -98,7 +97,8 @@ input[type="datetime-local"],
   -webkit-backdrop-filter: blur(8.8px);
   border: 1px solid rgba(255, 255, 255, 0.27);
   border-radius: var(--border-radius);
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
   transition: transform var(--transition-speed);
   position: fixed;
   top: 1.2rem;
@@ -133,7 +133,8 @@ p {
   -webkit-backdrop-filter: blur(8.8px);
   border: 1px solid rgba(255, 255, 255, 0.27);
   border-radius: var(--border-radius);
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
   transition: transform var(--transition-speed);
   position: fixed;
   top: 1.2rem;
@@ -168,8 +169,6 @@ p {
   }
 }
 
-
-
 input[type="text"],
 input[type="datetime-local"] {
   color: var(--main-font-color);
@@ -178,21 +177,18 @@ input[type="datetime-local"] {
   margin-bottom: 20px;
   box-sizing: border-box;
   outline: none;
-  font-family: 'DIN W02 Light';
+  font-family: "DIN W02 Light";
 }
 
 input[type="text"]:focus,
 input[type="datetime-local"]:focus {
   /* Placeholder styles here */
   /* Add your styles here */
-  
 }
 
-
-
-
 input::placeholder,
-.ql-editor::placeholder {}
+.ql-editor::placeholder {
+}
 
 input[type="text"]:hover,
 input[type="datetime-local"]:hover,
@@ -201,8 +197,8 @@ input[type="datetime-local"]:hover,
 .event_div button:hover {
   border-color: var(--hover-accent-color);
   /* transform: scale(1.02); */
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 #editor-container {
@@ -219,12 +215,11 @@ input[type="datetime-local"]:hover,
   margin-bottom: 20px;
 }
 
-
 .ql-editor[data-placeholder]::before {
   font-style: normal !important;
   font-size: 16px;
   font-weight: var(--font-regular);
-  font-family: 'DIN W02 Light';
+  font-family: "DIN W02 Light";
 }
 
 #editor-container .ql-editor {
@@ -240,7 +235,6 @@ input[type="datetime-local"]:hover,
   outline: none !important;
   box-shadow: none !important;
 }
-
 
 #jsonbtn {
   color: white;
@@ -288,7 +282,8 @@ input[type="datetime-local"]:hover,
 
 .event_div:hover {
   /* transform: scale(1.025); */
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 .event_div p {
@@ -313,8 +308,8 @@ input[type="datetime-local"]:hover,
   border: 1px solid rgba(255, 255, 255, 0.27);
   border-radius: var(--border-radius);
   transition: transform var(--transition-speed);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 h1,
@@ -326,7 +321,7 @@ h6 {
   font-weight: var(--font-bold);
   margin-bottom: 15px;
   line-height: 1.3;
-  font-family: 'badSchoolFontDIN1451W02Engschrift';
+  font-family: "badSchoolFontDIN1451W02Engschrift";
 }
 
 label {
@@ -340,7 +335,7 @@ input[type="datetime-local"],
 #jsonbtn,
 .event_div button {
   font-size: 16px;
-  font-family: 'DIN W02 Light';
+  font-family: "DIN W02 Light";
   font-weight: bold;
 }
 
@@ -363,7 +358,8 @@ input[type="datetime-local"],
   -webkit-backdrop-filter: blur(8.8px);
   border: 1px solid rgba(255, 255, 255, 0.27);
   border-radius: var(--border-radius);
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
   transition: transform var(--transition-speed);
   overflow-wrap: break-word;
 }
@@ -378,7 +374,6 @@ input[type="datetime-local"],
   line-height: 1.2em;
 }
 
-
 #date_container {
   text-align: middle;
   display: inline-block;
@@ -392,7 +387,6 @@ input[type="datetime-local"],
   border-radius: 10px;
   background-color: #ebebeb;
 }
-
 
 html {
   box-sizing: border-box;
@@ -443,17 +437,17 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 20px;
   height: 20px;
-  background: #4CAF50;
+  background: #4caf50;
   border-radius: 50%;
   cursor: pointer;
 }
 
 .large-text {
-	font-size: 24px;
+  font-size: 24px;
 }
 
 .small-text {
-	font-size: 14px;
+  font-size: 14px;
 }
 
 label[for="archiv_anzeigen"] {
@@ -481,12 +475,14 @@ input[type="checkbox"] {
 
 /* Style when the checkbox is checked */
 input[type="checkbox"]:checked {
-  background-color: var(--main-accent-color); /* Background color when checked */
+  background-color: var(
+    --main-accent-color
+  ); /* Background color when checked */
 }
 
 /* Custom checkmark using pseudo-element */
 input[type="checkbox"]:checked::after {
-  content: ''; /* Required for pseudo-elements */
+  content: ""; /* Required for pseudo-elements */
   position: absolute; /* Absolute positioning inside the checkbox */
   left: 6px; /* Horizontal position */
   top: 2px; /* Vertical position */

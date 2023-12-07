@@ -17,6 +17,3 @@
 - [ ] Solve problem with simultaneous uploade of events
 - [ ] Backend of Frontend should aleret Admin if Text in Frontend overflows - Boarder of Event should be red
 - [ ] When you uploade Event in Admin it should have a yellow boarder and when it is uoloaded and no text overflows then it is back to normal boarder color
-
-
-

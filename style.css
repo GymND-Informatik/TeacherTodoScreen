@@ -1,22 +1,20 @@
 @font-face {
-  font-family: 'badSchoolFontDIN1451W02Engschrift';
-  src: url('Gymnasium\ Neusiedl.woff') format('woff');
+  font-family: "badSchoolFontDIN1451W02Engschrift";
+  src: url("Gymnasium\ Neusiedl.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "DIN W02 Light";
-  src: url('GymnasiumFontLight.woff') format('woff');
+  src: url("GymnasiumFontLight.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
-
-
-h1, h2 {
+h1,
+h2 {
   font-family: badSchoolFontDIN1451W02Engschrift;
-
 }
 
 .wrapper {
@@ -62,14 +60,13 @@ h1 {
 
 h2 {
   font-weight: 400;
-  color: #86AD87;
+  color: #86ad87;
   padding-top: 6px;
   padding-bottom: 0px;
   letter-spacing: -0.01em;
   font-size: 4rem;
   margin: 0;
   text-transform: capitalize;
-
 }
 
 p {
@@ -127,7 +124,7 @@ h5 {
   font-family: "DIN W02 Light";
 }
 
-.image {  
+.image {
   height: 120px;
   left: 10px;
   top: 7rem;
@@ -135,7 +132,7 @@ h5 {
 }
 
 .small-text {
-	font-size: 2rem;
+  font-size: 2rem;
   font-family: "DIN W02 Light";
   /* font-family: 'badSchoolFontDINNextN0Light'; */
   /* font-weight: normal; */
@@ -144,19 +141,19 @@ h5 {
 }
 
 li {
- 	font-size: 2.4rem;
-   font-family: "DIN W02 Light";
-   /* font-family: 'badSchoolFontDINNextN0Light'; */
-   /*font-weight: normal;*/
-   margin: 0rem 0rem 0.6rem 0rem;
-   line-height: 1.085em;
+  font-size: 2.4rem;
+  font-family: "DIN W02 Light";
+  /* font-family: 'badSchoolFontDINNextN0Light'; */
+  /*font-weight: normal;*/
+  margin: 0rem 0rem 0.6rem 0rem;
+  line-height: 1.085em;
 }
 
 .large-text {
-	font-size: 3rem;
+  font-size: 3rem;
   font-family: "DIN W02 Light";
   /* font-family: 'badSchoolFontDINNextN0Light'; */
-/*  font-weight: normal;*/
+  /*  font-weight: normal;*/
   margin: 0rem 0rem 0.6rem 0rem;
   line-height: 1.085em;
 }
@@ -164,4 +161,3 @@ li {
 .pinned {
   border: 3px solid red !important;
 }
-
