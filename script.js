@@ -7,7 +7,8 @@ const ELEMENTSPERPAGE = 4;
 let page_turn_interval = undefined;
 var counter = 0;
 var refreshInterval = 0;
-
+var pinnedElements = [];
+var first_fetch = false;
 
 // Function to pad a number with leading zeros
 function pad(num, size) {
@@ -51,6 +52,7 @@ function fetchData() {
     .then(response => response.text())
     .then(_data => {
       allElements = [];
+      pinnedElements = [];
       const data = JSON.parse(_data);
       var _events = data.slice(1);
       
@@ -77,7 +79,7 @@ function fetchData() {
           events.removeChild(element);
           if (event.pinned) {
             element.classList.add("pinned");
-            allElements.unshift(element);
+            pinnedElements.unshift(element);
           } else allElements.push(element);
         }
         i += 1;
@@ -90,6 +92,17 @@ function fetchData() {
       }
       console.log('writing', data);
       write_into_json(data);
+
+
+      for (var i = 0; i < allElements.length; i++) {
+        if (i % ELEMENTSPERPAGE === 0) {
+	  for (var j = 0; j < pinnedElements.length; j++) {
+            allElements.splice(i, 0, pinnedElements[j]);
+	  }
+        }
+      }
+      console.log('sadas', allElements);
+      first_fetch = true;
     }) // <- Missing closing parenthesis here
     .catch(error => {
       console.error('Error:', error);
@@ -100,12 +113,13 @@ function fetchData() {
 // Initial fetch of data
 // fetchData();
 // Set intervals for refreshing data and fetching new data
-
+fetchData();
 setInterval(fetchData, 5000);
 
 // Function to append elements to the events container
 function appendElements(lst) {
   lst.forEach((el) => {
+    console.log('appending event', el);
     if (el !== undefined) events.append(el);
   });
 }
@@ -113,6 +127,7 @@ function appendElements(lst) {
 // Function to refresh the displayed events
 function runRefresh() {
 //  console.log(allElements);
+  if (!first_fetch) return;
   if (page * ELEMENTSPERPAGE >= allElements.length) {
     page = 0;
     return;
@@ -120,9 +135,10 @@ function runRefresh() {
   events.innerHTML = "";
   if (allElements.length === 0) return;
 
-  const lst = [];
-  for (let i = page * ELEMENTSPERPAGE; i < (page + 1) * ELEMENTSPERPAGE; i++)
+  let lst = [];
+  for (let i = page * ELEMENTSPERPAGE; i < (page + 1) * ELEMENTSPERPAGE; i++) {
     lst.push(allElements[i]);
+  }
 
   appendElements(lst);
 
