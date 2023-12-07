@@ -11,4 +11,8 @@
 - [x] Backend: Zeit zum Blättern einschalten BIG TODO
 - [x] Editieren Datum-Zeile soll entfernt werden
 - [ ] CSS styling test
+- [ ] Frontend soll 4 Kästchen haben
+- [ ] Angehefte maximal 2 - mache popup
+- [ ] 
+- [ ] 
 
