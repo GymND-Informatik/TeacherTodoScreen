@@ -221,7 +221,16 @@ function update() {
     // console.log('printText', printText);
 
     event_string +=
-      "<div class='event_div'>" +
+      "<div class='event_div' ";
+      if(x.large === 'large') {
+        event_string += "id='large_event'";
+      }
+      else if (x.large === 'pending') {
+        event_string += "id='unconfirmed_event'";
+      }
+    
+    event_string += 
+      ">" +
       "<p class='event'><b><font size=5>" +
       x.event;
 
@@ -307,7 +316,7 @@ jsonBtn.addEventListener("click", function() {
       von: von_time.value,
       bis: bis_time.value,
       pinned: false,
-      large: false
+      large: 'pending'
     }
 
 	// SAFEGUARDS
@@ -377,7 +386,7 @@ function check_events() {
 fetch('../output.json')
     .then(response => response.text())
     .then(data => {
-      console.log("1 begin fetch");
+      console.log("1 begin fetch - cheking events");
       console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
       arrallevents = JSON.parse(loaded_events).slice(1);
