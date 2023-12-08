@@ -34,29 +34,31 @@ body {
 .container {
   height: calc(100vh - 3rem);
   width: 120px;
-  position: absolute;
+  position: absolute; 
   top: 1.5rem;
   left: 1.5rem;
   background: #9fc8a1;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   border-radius: 15px;
+  overflow: hidden; 
 }
 
 h1 {
-  /* border: 1px solid black; */
   transform: rotate(-90deg);
+  transform-origin: left top; 
   margin: 0;
   font-weight: 550;
   font-size: 6rem;
   line-height: 5rem;
   letter-spacing: 0px;
   color: black;
-  width: 100vh;
-  height: 400px;
-  top: 0;
-  left: -380px;
+  width: calc(100vh - 3rem); 
+  height: 120px; 
   position: absolute;
+  top: 75%; 
+  left: 13.5%; 
 }
+
 
 h2 {
   font-weight: 400;
@@ -141,7 +143,7 @@ h5 {
 }
 
 li {
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-family: "DIN W02 Light";
   /* font-family: 'badSchoolFontDINNextN0Light'; */
   /*font-weight: normal;*/
