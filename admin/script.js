@@ -445,15 +445,26 @@ function pin(checkbox) {
       arrallevents = JSON.parse(loaded_events).slice(1);
       console.log("3 fetched into array", arrallevents);
       console.log("4 end fetch");
+    
+  var num_pinned = 0;
+  for (var i = 0; i < arrallevents.length; i++) {
+    if (arrallevents[i].pinned) num_pinned++;
+  }
+  if (num_pinned >= 2 && checkbox.checked) {
+   //chechbox.checked = false;
+   alert('Es können nicht mehr als 2 Events angeheftet sein!');
+   return;
+  }
+  for (var i = 0; i < arrallevents.length; i++) {
+    if (arrallevents[i].event == checkbox.name) {
+      arrallevents[i].pinned = checkbox.checked;
+      break;
+    }
+  }
 
-      // Loop through all the elements in arrallevents and see if they match with the button
-      for (var i = 0; i < arrallevents.length; i++) {
-        if (arrallevents[i].event == checkbox.name) {
-          arrallevents[i].pinned = checkbox.checked;
-          break;
-        }
-      }
-      write_into_json();
+  write_into_json();
+
+
     })
     .catch((error) => {
       console.error("Error:", error);
