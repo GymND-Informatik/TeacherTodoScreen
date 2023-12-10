@@ -454,7 +454,9 @@ li {
 }
 
 #page-turn,
-#submit_interval {
+#submit_interval,
+#display-order
+ {
   background: rgba(52, 139, 64, 0.22);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
@@ -487,7 +489,8 @@ li {
 
 #page-turn:hover,
 #submit_interval:hover,
-#sofort:hover {
+#sofort:hover,
+#display-order:hover {
   border-color: var(--hover-accent-color);
   /* transform: scale(1.02); */
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
