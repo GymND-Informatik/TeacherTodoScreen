@@ -3,11 +3,13 @@
 ## Backend Administration
 
 ### Input Fields
+
 - **Event Name, Text, From, To**: These are the four primary input fields for event details.
 - **Dropdown Menu**: This allows the selection of the page change speed on the frontend. Changes can be implemented by clicking the adjacent button.
 - **Pinning Option**: Events can be set as 'pinned', meaning they remain prominently displayed on the frontend.
 
 ### Functionality
+
 - **Data Upload**: Clicking the "Hochladen" button transfers data from the input fields to the `arrallevents` JSON array. Each event is represented as a JSON object with six attributes:
   - `event`: Title of the event.
   - `text`: Additional details about the event (formatted using quill.js).
@@ -24,9 +26,11 @@
 ## Frontend
 
 ### Display
+
 - **Event Visualization**: The frontend showcases events from [output.json](output.json), displaying four at a time and allowing page navigation.
 
 ### Functionality
+
 - **Data Fetching and Processing**: `fetchData()` runs every 5 seconds, retrieving and parsing [output.json](output.json). It organizes events for display, prioritizing pinned events and setting the `page_turn_interval`.
 - **Automatic Refresh**: `check_refresh()` maintains a counter, triggering `runRefresh()` when the interval exceeds `page_turn_interval`. This mechanism ensures timely updates and page transitions.
 - **Event Presentation**: `runRefresh()` manages the HTML content, displaying events and facilitating page changes as needed.
