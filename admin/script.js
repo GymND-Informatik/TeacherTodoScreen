@@ -10,6 +10,7 @@ var sofort = document.getElementById("sofort");
 var dropdown = document.getElementById("page-turn");
 var interval_button = document.getElementById("submit_interval");
 var change_interval = 5;
+var display_order = document.getElementById("display-order");
 
 // ----------------------------------------------------
 
@@ -35,7 +36,7 @@ var quill = new Quill("#editor", {
 
 // Load all the events from the JSON file into the array  (hard coded to know if php failed)
 var loaded_events =
-  '[{"event":"PHP Loading Failed Mad ","text":"","von":"2023-11-08T00:00","bis":"2023-11-08T23:59"}]';
+  '[{"event":"PHP Loading Failed Mad check your permissions lmao ot call me","text":"","von":"2023-11-08T00:00","bis":"2023-11-08T23:59"}]';
 arrallevents = JSON.parse(loaded_events);
 update();
 
@@ -196,13 +197,48 @@ function button_edit(button) {
     });
 }
 
+display_order.addEventListener("change", update);
+
 // Update the HTML doc to display all the existing events
 function update() {
   // Display all the existent events in a buffer
 
   // TODO display order
+  // option 1: earliest added
+  // option 2: last added / reverse of option 1
+  // option 3: lastest date last, earliest date first (e.g.  run out in 10 secs from now first, run out in 2 days from now last)
+  // option 4: reverse of option 3
   var event_string = "";
-  arrallevents.forEach(function (arrayItem) {
+
+//  var option = "1";
+//  var option = "2";
+//  var option = "3";
+//  var option = "4";
+  var option = display_order.value;
+  var ordered_events = [];
+
+  if (option === "1") {
+    // simplest case: just in the order they were added, newest on top, this is the way it is always in the arrallevents array
+    for (var i = 0; i < arrallevents.length; i++) {
+      ordered_events.push(arrallevents[i]);
+    }
+  }
+  else if (option === "2") {
+    // reverse the order of arrallevents
+    for (var i = 0; i < arrallevents.length; i++) {
+      ordered_events.push(arrallevents[arrallevents.length - i - 1]);
+    }
+  }
+  else if (option === "3") {
+    ordered_events = [...arrallevents].sort((a,b) => a.bis - b.bis);
+    ordered_events.sort((a,b) => {return new Date(a.bis).getTime() - new Date(b.bis).getTime();});
+  }
+  else if (option === "4") {
+    ordered_events = arrallevents;
+    ordered_events.sort((a,b) => {return new Date(b.bis).getTime() - new Date(a.bis).getTime();});
+  }
+
+  ordered_events.forEach(function (arrayItem) {
     var x = arrayItem;
 
     var von_ = new Date(x.von);
@@ -451,7 +487,7 @@ function pin(checkbox) {
     if (arrallevents[i].pinned) num_pinned++;
   }
   if (num_pinned >= 2 && checkbox.checked) {
-   //chechbox.checked = false;
+   setTimeout(() => {checkbox.checked = false; console.log("asdasdasdsad")}, 0);
    alert('Es können nicht mehr als 2 Events angeheftet sein!');
    return;
   }
