@@ -247,7 +247,7 @@ function update() {
 
     event_string += "<div><b>" + date_von + " - " + date_bis + "</b></div></p>";
 
-    if (x.text !== "") {
+    if (x.text.replace(/<p><br><\/p>/g, "") !== "") {
       event_string += "<div id='text_container'>" + printText + "</div>";
     }
 
@@ -257,15 +257,21 @@ function update() {
       "'>Löschen</button>" +
       "<button onclick='button_edit(this)' class='edit' name='" +
       x.event +
-      "'>Bearbeiten</button><label for='pin_checkbox'>Anheften:</label><input type='checkbox' id='pin_checkbox' onclick='pin(this)' name='" +
+      "'>Bearbeiten</button><label>Anheften:</label>" +
+      "<div class='body-checkbox'> <input id='checkbox_" +
+      x.event +
+      "' type='checkbox' onclick='pin(this)' class='glass-checkbox' name='" +
       x.event +
       "'";
 
     if (x.pinned) {
-      event_string += "checked";
+      event_string += " checked";
     }
 
-    event_string += ">" + "</div>\n";
+    event_string += "><label for='checkbox_" +
+    x.event +
+    "' class='label-glass-checkbox'></label></div>" +
+    "</div>\n";
   });
 
   console.log("7 rendered", arrallevents);
