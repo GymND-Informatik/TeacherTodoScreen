@@ -11,6 +11,8 @@ var dropdown = document.getElementById("page-turn");
 var interval_button = document.getElementById("submit_interval");
 var change_interval = 5;
 var display_order = document.getElementById("display-order");
+var mode = document.getElementById("mode");
+var mode_button = document.getElementById("submit_mode");
 
 // ----------------------------------------------------
 
@@ -45,7 +47,7 @@ read_json(true);
 
 // -------------------------------------------------------
 
-interval_button.addEventListener("click", function () {
+dropdown.addEventListener("change", function () {
   console.log(dropdown.value);
   //for (var i = 0; i < arrallevents.length; i++) {
   //arrallevents[i].page_turn = dropdown.value;
@@ -62,8 +64,11 @@ function read_json(_update) {
       console.log("1 begin fetch");
       console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
-      arrallevents = JSON.parse(loaded_events).slice(1);
-      console.log("3 fetched into array", arrallevents);
+      var parsed = JSON.parse(loaded_events);
+      arrallevents = parsed.slice(1);
+      mode.value = parsed[0].mode;
+      dropdown.value = parsed[0].page_turn.toString();
+      console.log("3 fetched into array", arrallevents, change_interval, mode);
       if (_update) {
         update();
       }
@@ -84,7 +89,8 @@ function pad(num, size) {
 // Write it into a simple JSON file server-side called output.json
 function write_into_json() {
   console.log(change_interval, JSON.stringify(arrallevents));
-  const temp = [change_interval, ...arrallevents];
+  const temp = [{'page_turn': change_interval, 'mode': mode.value}, ...arrallevents];
+  console.log(temp, mode.value);
   fetch("saveFile.php", {
     method: "POST",
     headers: {
@@ -198,6 +204,8 @@ function button_edit(button) {
 }
 
 display_order.addEventListener("change", update);
+
+mode.addEventListener("change", write_into_json);
 
 // Update the HTML doc to display all the existing events
 function update() {
@@ -432,8 +440,11 @@ function check_events() {
     .then((data) => {
       console.log("1 begin fetch - cheking events");
       console.log("2 raw", data); // Log the content of the file
-      loaded_events = data;
-      arrallevents = JSON.parse(loaded_events).slice(1);
+      loaded_events = JSON.parse(data);
+      arrallevents = loaded_events.slice(1);
+      console.log(loaded_events[0].mode, loaded_events[0].page_turn);
+      mode.value = loaded_events[0].mode;
+      dropdown.value = loaded_events[0].page_turn.toString();
       console.log("3 fetched into array", arrallevents);
       console.log("4 end fetch");
 
