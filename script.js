@@ -9,7 +9,9 @@ var counter = 0;
 var refreshInterval = 0;
 var pinnedElements = [];
 var first_fetch = false;
+var mode = 'dark';
 
+document.documentElement.setAttribute('data-theme', mode);
 
 // Function to pad a number with leading zeros
 function pad(num, size) {
@@ -54,8 +56,9 @@ function fetchData() {
       allElements = [];
       pinnedElements = [];
       const data = JSON.parse(_data);
-      var _events = data.slice(1);
-
+      const _events = data.slice(1);
+      const _interval = data[0].page_turn;
+      const _mode = data[0].mode;
       var i = 1;
       _events.forEach((event) => {
         console.log(event);
@@ -78,23 +81,25 @@ function fetchData() {
           events.removeChild(element);
           if (event.pinned) {
             element.classList.add("pinned");
-            pinnedElements.unshift(element);
+            pinnedElements.push(element);
           } else allElements.push(element);
         }
         i += 1;
       });
       if (
         page_turn_interval === undefined ||
-        page_turn_interval !== data[0] * 1000
+        page_turn_interval !== _interval * 1000
       ) {
-        page_turn_interval = data[0] * 1000;
+        page_turn_interval = _interval * 1000;
         clearInterval(refreshInterval); // Clear the previous interval
         runRefresh(); // Run immediately with the new interval
         refreshInterval = setInterval(runRefresh, page_turn_interval); // Set the new interval
       }
       console.log("writing", data);
+      console.log("pinned", pinnedElements);
+      mode = _mode;
+      document.documentElement.setAttribute('data-theme', mode);
       write_into_json(data);
-
 
       for (var i = 0; i < allElements.length; i++) {
         if (i % ELEMENTSPERPAGE === 0) {
