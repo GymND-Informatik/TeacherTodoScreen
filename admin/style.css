@@ -27,6 +27,7 @@
   --lable-glass-checkbox-border-right: rgba(255, 255, 255, 0.1);
   --lable-glass-checkbox-border-bottom: rgba(255, 255, 255, 0.1);
 }
+
 @font-face {
   font-family: "badSchoolFontDIN1451W02Engschrift";
   src: url("Gymnasium\ Neusiedl.woff") format("woff");
@@ -39,6 +40,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 body {
   background: var(--main-bg-color);
   font-family: "badSchoolFontDIN1451W02Engschrift", "DIN W02 Light";
@@ -89,7 +91,7 @@ input[type="text"] {
 input[type="text"],
 input[type="datetime-local"],
 .event_div,
-#jsonbtn,
+#upload-button,
 .event_div button {
   background: var(--card-background);
   backdrop-filter: blur(8.8px);
@@ -99,6 +101,7 @@ input[type="datetime-local"],
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
   transition: transform var(--transition-speed);
 }
+
 #unconfirmed_event {
   border: 2px solid var(--unconfirmed-event-border);
   background: var(--unconfirmed-event-background);
@@ -109,7 +112,7 @@ input[type="datetime-local"],
   background: var(--large-event-background);
 }
 
-.form-container {
+.input-container {
   background: var(--card-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
@@ -121,15 +124,16 @@ input[type="datetime-local"],
   position: fixed;
   top: 1.2rem;
   left: 14rem;
-  width: calc(50% - 8rem); /* Adjusted width */
+  width: calc(50% - 8rem);
+  /* Adjusted width */
   padding: 25px;
   overflow: scroll;
   z-index: 2;
 }
 
-/* Remove scrollbar for form-container */
-.form-container::-webkit-scrollbar,
-.form-container2::-webkit-scrollbar {
+/* Remove scrollbar for containers */
+.input-container::-webkit-scrollbar,
+.events-container::-webkit-scrollbar {
   display: none;
 }
 
@@ -145,7 +149,7 @@ p {
 }
 
 /* Secondary form container styling */
-.form-container2 {
+.events-container {
   background: var(--card-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
@@ -157,7 +161,8 @@ p {
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
-  width: calc(50% - 8.4rem); /* Adjusted width */
+  width: calc(50% - 8.4rem);
+  /* Adjusted width */
   padding: 25px;
   overflow: scroll;
   z-index: 1;
@@ -183,12 +188,11 @@ input[type="datetime-local"]:focus {
 }
 
 input::placeholder,
-.ql-editor::placeholder {
-}
+.ql-editor::placeholder {}
 
 input[type="text"]:hover,
 input[type="datetime-local"]:hover,
-#jsonbtn:hover,
+#upload-button:hover,
 #editor-container:hover,
 .event_div button:hover {
   border-color: var(--hover-accent-color);
@@ -232,7 +236,7 @@ input[type="datetime-local"]:hover,
   box-shadow: none !important;
 }
 
-#jsonbtn {
+#upload-button {
   color: white;
   padding: 10px;
   text-align: center;
@@ -250,7 +254,7 @@ input[type="datetime-local"]:hover,
   transition: transform var(--transition-speed);
 }
 
-#displayallevents {
+#events-display {
   margin-top: 20px;
 }
 
@@ -328,7 +332,7 @@ label {
 
 input[type="text"],
 input[type="datetime-local"],
-#jsonbtn,
+#upload-button,
 .event_div button {
   font-size: 16px;
   font-family: "DIN W02 Light";
@@ -338,7 +342,7 @@ input[type="datetime-local"],
 .event_div {
   margin-bottom: 15px;
   text-align: center;
-	align-items: center;
+  align-items: center;
 }
 
 #text_container {
@@ -428,6 +432,7 @@ input[type="range"] {
   opacity: 0.7;
   transition: opacity 0.2s;
 }
+
 input[type="range"]:hover {
   opacity: 1;
 }
@@ -454,8 +459,8 @@ li {
   font-family: 'DIN W02 Light';
 }
 
-/* Style for sofort button */
-#sofort {
+/* Style for instant button */
+#instant-button {
   color: var(--button-text-color);
   padding: 10px 25px;
   margin-bottom: 20px;
@@ -473,10 +478,9 @@ li {
   font-size: 16px;
 }
 
-#page-turn,
-#display-order,
-#mode
-{
+#page-turn-select,
+#display-order-select,
+#mode-select {
   background: var(--logo-container-button-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
@@ -507,10 +511,10 @@ li {
   margin-bottom: 1rem;
 }
 
-#page-turn:hover,
-#sofort:hover,
-#mode:hover,
-#display-order:hover {
+#page-turn-select:hover,
+#instant-button:hover,
+#mode-select:hover,
+#display-order-select:hover {
   border-color: var(--hover-accent-color);
   /* transform: scale(1.02); */
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
@@ -518,23 +522,26 @@ li {
 }
 
 .body-checkbox {
-/*  background: rgba(255, 255, 255, 0.3); */
+  /*  background: rgba(255, 255, 255, 0.3); */
   padding: 15px;
   border-radius: 15px;
   border: 1px solid var(--body-checkbox-border);
-	display: flex;
-  justify-content: center; /* Centers horizontally */
+  display: flex;
+  justify-content: center;
+  /* Centers horizontally */
   align-items: center;
   text-align: center;
   width: 100%;
   height: 100%;
 }
+
 .glass-checkbox {
   opacity: 0;
   visibility: hidden;
   z-index: -1;
   display: none;
 }
+
 .label-glass-checkbox {
   position: relative;
   display: block;
@@ -550,7 +557,8 @@ li {
   border-radius: 40px;
   transition: background-color 0.4s;
 }
-.glass-checkbox:checked + .label-glass-checkbox {
+
+.glass-checkbox:checked+.label-glass-checkbox {
   background-color: var(--button-background);
   border-color: transparent;
 }
@@ -571,6 +579,7 @@ li {
   transition: transform 0.4s;
   backdrop-filter: blur(7px);
 }
-.glass-checkbox:checked + .label-glass-checkbox::before {
+
+.glass-checkbox:checked+.label-glass-checkbox::before {
   transform: translate(36px, -50%);
 }

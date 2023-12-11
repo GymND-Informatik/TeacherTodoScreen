@@ -1,16 +1,15 @@
 // Initiate all variables
 var events = [];
-
-var input_event = document.getElementById("event");
-var input_from = document.getElementById("von_time");
-var input_to = document.getElementById("bis_time");
-var upload_button = document.getElementById("jsonbtn");
-var events_display = document.getElementById("displayallevents");
-var instant_button = document.getElementById("sofort");
-var page_turn_select = document.getElementById("page-turn");
+var input_event = document.getElementById("event-input");
+var input_from = document.getElementById("from-time");
+var input_to = document.getElementById("to-time");
+var upload_button = document.getElementById("upload-button");
+var events_display = document.getElementById("events-display");
+var instant_button = document.getElementById("instant-button");
+var page_turn_select = document.getElementById("page-turn-select");
 var page_turn_interval = 5;
-var display_order_select = document.getElementById("display-order");
-var mode_select = document.getElementById("mode");
+var display_order_select = document.getElementById("display-order-select");
+var mode_select = document.getElementById("mode-select");
 
 // ----------------------------------------------------
 
@@ -44,16 +43,12 @@ update();
 fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("1 begin fetch");
-      console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
       var parsed = JSON.parse(loaded_events);
       events = parsed.slice(1);
       mode_select.value = parsed[0].mode;
       page_turn_select.value = parsed[0].page_turn.toString();
-      console.log("3 fetched into array", events, page_turn_interval, mode_select);
       update();
-      console.log("4 end fetch");
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -63,28 +58,19 @@ fetch("../output.json")
 
 page_turn_select.addEventListener("change", function () {
   console.log(page_turn_select.value);
-  //for (var i = 0; i < arrallevents.length; i++) {
-  //arrallevents[i].page_turn = dropdown.value;
-  //}
   page_turn_interval = page_turn_select.value;
   write_into_json();
 });
 
-// Funtion to read the json file and update the arrallevents array
-function read_json(_update) {
-  
-}
-
-// Pad a number with zeroes in front (used for dates)
+// Pad a number with zeroes in front (used for dates display)
 function pad(num, size) {
   num = num.toString();
   while (num.length < size) num = "0" + num;
   return num;
 }
 
-// Write it into a simple JSON file server-side called output.json
+// Write it into a simple JSON file server-side ../output.json
 function write_into_json() {
-  console.log(page_turn_interval, JSON.stringify(events));
   const temp = [{'page_turn': page_turn_interval, 'mode': mode_select.value}, ...events];
   console.log(temp, mode_select.value);
   fetch("saveFile.php", {
@@ -108,12 +94,12 @@ function button_delete(button) {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("1 begin fetch");
-      console.log("2 raw", data); // Log the content of the file
+      console.log("[delete] 1 begin fetch");
+      console.log("[delete] 2 raw", data); // Log the content of the file
       loaded_events = data;
       events = JSON.parse(loaded_events).slice(1);
-      console.log("3 fetched into array", events);
-      console.log("4 end fetch");
+      console.log("[delete] 3 fetched into array", events);
+      console.log("[delete] 4 end fetch");
 
       // Loop through all the elements in arrallevents and see if they match with the button
       for (var i = 0; i < events.length; i++) {
@@ -155,12 +141,12 @@ function button_edit(button) {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("1 begin fetch");
-      console.log("2 raw", data); // Log the content of the file
+      console.log("[edit] 1 begin fetch");
+      console.log("[edit] 2 raw", data); // Log the content of the file
       loaded_events = data;
       events = JSON.parse(loaded_events).slice(1);
-      console.log("3 fetched into array", events);
-      console.log("4 end fetch");
+      console.log("[edit] 3 fetched into array", events);
+      console.log("[edit] 4 end fetch");
 
       for (var i = 0; i < events.length; i++) {
         if (events[i].event == button.name) {
@@ -200,8 +186,9 @@ function button_edit(button) {
     });
 }
 
-// Add event listeners to change of mode and display_order to instantly write it into json / rerender with the new order
+// Add event listener to change of display_order to instantly rerender with the new order
 display_order_select.addEventListener("change", update);
+// Add event listener to change of mode and instantly write it into json
 mode_select.addEventListener("change", write_into_json);
 
 // Update the HTML doc to display all the existing events
@@ -213,10 +200,6 @@ function update() {
   // option 4: reverse of option 3
   var events_html = "";
 
-//  var option = "1";
-//  var option = "2";
-//  var option = "3";
-//  var option = "4";
   var option = display_order_select.value;
   var ordered_events = [];
 
@@ -270,7 +253,7 @@ function update() {
       pad(bis_date.getMinutes(), 2);
 
     // Add a new HTML element
-    printText = x.text.replace(/\n/g, "<br>");
+    var print_text = x.text.replace(/\n/g, "<br>");
     // console.log('printText', printText);
 
     events_html += "<div class='event_div' ";
@@ -287,7 +270,7 @@ function update() {
     events_html += "<div><b>" + date_von + " - " + date_bis + "</b></div></p>";
 
     if (x.text.replace(/<p><br><\/p>/g, "") !== "") {
-      events_html += "<div id='text_container'>" + printText + "</div>";
+      events_html += "<div id='text_container'>" + print_text + "</div>";
     }
 
     events_html +=
@@ -313,7 +296,7 @@ function update() {
     "</div>\n";
   });
 
-  console.log("7 rendered", events);
+  console.log("[rendered]", events);
   //  console.log('events_string', event_string);
   events_display.innerHTML = events_html;
 }
@@ -322,20 +305,20 @@ function update() {
 function get_content_as_html() {
   var delta = quill.getContents();
 
-  var tempCont = document.createElement("div");
-  new Quill(tempCont).setContents(delta);
+  var temp_cont = document.createElement("div");
+  new Quill(temp_cont).setContents(delta);
 
-  var htmlContent = tempCont.querySelector(".ql-editor").innerHTML;
-  return htmlContent;
+  var html_content = temp_cont.querySelector(".ql-editor").innerHTML;
+  return html_content;
 }
 
 // Modify the HTML from quill to be compatible with the backend display AND the frontend
 function modify_quill_html(htmlContent) {
-  var modifiedHTML = htmlContent;
-  modifiedHTML = modifiedHTML.replace(/ql-size-large/g, "large-text");
-  modifiedHTML = modifiedHTML.replace(/ql-size-small/g, "small-text");
+  var modified_html = htmlContent;
+  modified_html = modified_html.replace(/ql-size-large/g, "large-text");
+  modified_html = modified_html.replace(/ql-size-small/g, "small-text");
 
-  return modifiedHTML;
+  return modified_html;
 }
 
 // The "hochladen" button, used to add new events
@@ -343,24 +326,23 @@ upload_button.addEventListener("click", function () {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("1 begin fetch");
-      console.log("2 raw", data); // Log the content of the file
+      console.log("[upload] 1 begin fetch");
+      console.log("[upload] 2 raw", data); // Log the content of the file
       loaded_events = data;
       events = JSON.parse(loaded_events).slice(1);
-      console.log("3 fetched into array", events);
-      console.log("4 end fetch");
-      console.log("5 read", events);
+      console.log("[upload] 3 fetched into array", events);
+      console.log("[upload] 4 end fetch");
+      console.log("[upload] 5 read", events);
       var text = get_content_as_html();
       text = modify_quill_html(text);
 
-      // console.log('quill output', text);
       var data = {
         event: input_event.value,
         text: text,
         von: input_from.value,
         bis: input_to.value,
         pinned: false,
-        large: "pending",
+        large: "pending"
       };
 
       // SAFEGUARDS
@@ -401,11 +383,11 @@ upload_button.addEventListener("click", function () {
 
       // Write it in
       events.push(data);
-      console.log("6 Pushed data", events);
+      console.log("[upload] 6 Pushed data", events);
       // Update the display and update the output file
       update();
       write_into_json();
-      console.log("8 written into json", events);
+      console.log("[upload] 7 written into json", events);
 
       // Clear the inputs
       input_event.value = "";
@@ -423,24 +405,21 @@ function check_events() {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("1 begin fetch - cheking events");
-      console.log("2 raw", data); // Log the content of the file
+      console.log("[check] 1 begin fetch");
+      console.log("[check] 2 raw", data); // Log the content of the file
       loaded_events = JSON.parse(data);
       events = loaded_events.slice(1);
-      console.log(loaded_events[0].mode, loaded_events[0].page_turn);
       mode_select.value = loaded_events[0].mode;
       page_turn_select.value = loaded_events[0].page_turn.toString();
-      console.log("3 fetched into array", events);
-      console.log("4 end fetch");
+      console.log("[check] 3 fetched into array", events);
+      console.log("[check] 4 end fetch");
 
+      // Remove events that do not belong there and then rewrite without the old events
       var change = false;
       for (var i = 0; i < events.length; i++) {
         var event = events[i];
-        // WARNING: since time is different on pi this might pose a problem
-        var currentDateUTC = new Date();
-        const localTime =
-          currentDateUTC.getTime() - currentDateUTC.getTimezoneOffset() * 60000;
-        var date = new Date(currentDateUTC);
+        var current_date_utc = new Date();
+        var date = new Date(current_date_utc);
         var event_date = new Date(event.bis);
         if (date >= event_date) {
           events.splice(i, 1);
@@ -449,13 +428,10 @@ function check_events() {
           // Break the loop
           break;
         }
-        //     console.log(event, current, event.von, event.bis, isDateBetween(current, event.von, event.bis));
       }
       if (change) {
-        update();
         write_into_json();
       }
-
       update();
     })
     .catch((error) => {
@@ -464,6 +440,7 @@ function check_events() {
 }
 
 // Check every five seconds, can be expanded
+// TODO might do a thung where i mark a boolean as 'fetching' and do not perform writes or edits during the entirity of check_dates()
 setInterval(check_events, 5000);
 
 // Pin an event (mark it as pinned, will take effect only on the frontend)
@@ -502,16 +479,16 @@ function pin(checkbox) {
 
 // On button press just fill in the input_from with the current date in the correct format
 instant_button.addEventListener("click", function () {
-  const currentDateUTC = new Date();
+  const current_date_utc = new Date();
 
   // Convert UTC time to local time
-  const localTime =
-    currentDateUTC.getTime() - currentDateUTC.getTimezoneOffset() * 60000;
-  const currentDateLocal = new Date(localTime);
+  const local_time =
+    current_date_utc.getTime() - current_date_utc.getTimezoneOffset() * 60000;
+  const currentDateLocal = new Date(local_time);
 
   // Format the date as required by datetime-local input (YYYY-MM-DDTHH:MM)
-  const dateString = currentDateLocal.toISOString().substring(0, 16);
+  const date_string = currentDateLocal.toISOString().substring(0, 16);
 
   // Set the value of the datetime input
-  input_from.value = dateString;
+  input_from.value = date_string;
 });
