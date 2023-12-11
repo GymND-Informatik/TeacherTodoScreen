@@ -279,7 +279,7 @@ function display() {
       "<button onclick='button_edit(this)' class='edit' name='" +
       x.event +
       "'>Bearbeiten</button><label>Anheften:</label>" +
-      "<div class='pinned-body-checkbox'> <input id='pinned-checkbox-" +
+      "<div class='body-checkbox'> <input id='checkbox-" +
       x.event +
       "' type='checkbox' onclick='pin(this)' class='glass-checkbox' name='" +
       x.event +
@@ -289,7 +289,7 @@ function display() {
       events_html += " checked";
     }
 
-    events_html += "><label for='pinned-checkbox-" +
+    events_html += "><label for='checkbox-" +
     x.event +
     "' class='label-glass-checkbox'></label></div>" +
     "</div>\n";

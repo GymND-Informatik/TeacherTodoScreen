@@ -525,7 +525,7 @@ li {
   /*  background: rgba(255, 255, 255, 0.3); */
   padding: 15px;
   border-radius: 15px;
-  border: 1px solid var(--body-checkbox-border);
+  /*border: 1px solid var(--body-checkbox-border);*/
   display: flex;
   justify-content: center;
   /* Centers horizontally */

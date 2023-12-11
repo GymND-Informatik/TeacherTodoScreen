@@ -10,6 +10,7 @@ var refresh_interval = 0;
 var pinned_elements = [];
 var first_fetch = false;
 var mode = 'dark';
+var fetching = false;
 
 // set theme right in the begging otherwise everything is white
 document.documentElement.setAttribute('data-theme', mode);
@@ -54,6 +55,7 @@ function fetch_data() {
   fetch("output.json")
     .then((response) => response.text())
     .then((_data) => {
+      fetching = true;
       all_elements = [];
       pinned_elements = [];
       const data = JSON.parse(_data);
@@ -104,7 +106,9 @@ function fetch_data() {
 	  }
         }
       }
+      console.log("all_elementsi after fetch", all_elements, page_turn_interval);
       first_fetch = true;
+      fetching = false;
     }) // <- Missing closing parenthesis here
     .catch((error) => {
       console.error("Error:", error);
@@ -120,7 +124,7 @@ setInterval(fetch_data, 5000);
 // Function to append elements to the events container
 function append_elements(lst) {
   lst.forEach((el) => {
-    if (el !== undefined) events.append(el);
+    if (el !== undefined) events.append(el); console.log('appending el', el);
   });
 }
 
@@ -128,6 +132,7 @@ function append_elements(lst) {
 function run_refresh() {
 //  console.log(allElements);
   if (!first_fetch) return;
+  if (fetching) {return; console.log("aborted refresh, fetching");}
 
   if (page * ELEMENTSPERPAGE >= all_elements.length) {
     page = 0;
