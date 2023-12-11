@@ -1,8 +1,8 @@
 :root {
-  --main-bg-color: #cccfd1;
+  --main-bg-color: #bbc3bd;
   --main-accent-color: #348b41;
   --hover-accent-color: #79a988;
-  --main-font-color: #394852;
+  --main-font-color: #071f2a;
   --secondary-font-color: #071f2a;
   --placeholder-color: #bbc3bd;
   --light-shadow: 0 2px 5px rgba(255, 255, 255, 0.7);
@@ -11,6 +11,21 @@
   --transition-speed: 0.3s;
   --font-regular: 400;
   --font-bold: 700;
+  --logo-container-background: rgba(121, 169, 135, 0.5);
+  --card-background: rgba(255, 255, 255, 0.24);
+  --card-border: rgba(255, 255, 255, 0.27);
+  --unconfirmed-event-background: rgba(230, 187, 103, 0.0895);
+  --unconfirmed-event-border: rgba(230, 187, 103, 0.3);
+  --large-event-background: rgba(211, 69, 58, 0.0895);
+  --large-event-border: rgba(211, 69, 58, 0.3);
+  --button-background: rgba(52, 139, 64, 0.42);
+  --logo-container-button-background: rgba(52, 139, 64, 0.22);
+  --button-text-color: white;
+  --body-checkbox-border: rgba(255, 255, 255, 0.3);
+  --lable-glass-checkbox-background: rgba(255, 255, 255, 0.4);
+  --lable-glass-checkbox-border: rgba(255, 255, 255, 0.4);
+  --lable-glass-checkbox-border-right: rgba(255, 255, 255, 0.1);
+  --lable-glass-checkbox-border-bottom: rgba(255, 255, 255, 0.1);
 }
 @font-face {
   font-family: "badSchoolFontDIN1451W02Engschrift";
@@ -25,7 +40,7 @@
   font-style: normal;
 }
 body {
-  background: var(--placeholder-color);
+  background: var(--main-bg-color);
   font-family: "badSchoolFontDIN1451W02Engschrift", "DIN W02 Light";
   padding: 20px;
   margin: 0;
@@ -36,7 +51,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  font-size: 22px;
+  font-size: 20px;
   letter-spacing: 0.025em;
 }
 
@@ -48,7 +63,7 @@ body {
   /* padding-right: 10px;
   padding-bottom: 10px;
   padding-top: 10px; */
-  background: rgba(121, 169, 135, 0.5);
+  background: var(--logo-container-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
   border: 1px solid rgba(255, 255, 255, 0.27);
@@ -76,29 +91,29 @@ input[type="datetime-local"],
 .event_div,
 #jsonbtn,
 .event_div button {
-  background: rgba(255, 255, 255, 0.24);
+  background: var(--card-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid rgba(255, 255, 255, 0.27);
+  border: 1px solid var(--card-border);
   border-radius: var(--border-radius);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
   transition: transform var(--transition-speed);
 }
 #unconfirmed_event {
-  border: 2px solid rgba(230, 187, 103, 0.3);
-  background: rgba(230, 187, 103, 0.0895);
+  border: 2px solid var(--unconfirmed-event-border);
+  background: var(--unconfirmed-event-background);
 }
 
 #large_event {
-  border: 2px solid rgba(211, 69, 58, 0.3);
-  background: rgba(211, 69, 58, 0.0895);
+  border: 2px solid var(--large-event-border);
+  background: var(--large-event-background);
 }
 
 .form-container {
-  background: rgba(255, 255, 255, 0.24);
+  background: var(--card-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid rgba(255, 255, 255, 0.27);
+  border: 1px solid var(--card-border);
   border-radius: var(--border-radius);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -131,10 +146,10 @@ p {
 
 /* Secondary form container styling */
 .form-container2 {
-  background: rgba(255, 255, 255, 0.24);
+  background: var(--card-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid rgba(255, 255, 255, 0.27);
+  border: 1px solid var(--card-border);
   border-radius: var(--border-radius);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -183,10 +198,10 @@ input[type="datetime-local"]:hover,
 }
 
 #editor-container {
-  background: rgba(255, 255, 255, 0.24);
+  background: var(--card-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid rgba(255, 255, 255, 0.27);
+  border: 1px solid var(--card-border);
   border-radius: var(--border-radius);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   transition: transform var(--transition-speed);
@@ -227,10 +242,10 @@ input[type="datetime-local"]:hover,
   border: none;
   cursor: pointer;
   border: 0;
-  background: rgba(52, 139, 64, 0.42);
+  background: var(--button-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid rgba(255, 255, 255, 0.27);
+  border: 1px solid var(--card-border);
   border-radius: var(--border-radius);
   transition: transform var(--transition-speed);
 }
@@ -335,10 +350,10 @@ input[type="datetime-local"],
   padding-left: 10px;
   padding-top: 2px;
   padding-bottom: 2px;
-  background: rgba(255, 255, 255, 0.24);
+  background: var(--card-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid rgba(255, 255, 255, 0.27);
+  border: 1px solid var(--card-border);
   border-radius: var(--border-radius);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -355,7 +370,7 @@ input[type="datetime-local"],
 
 #text_container li {
   line-height: 1.2em;
-  font-size: 20px;
+  font-size: 16px;
   letter-spacing: -0.015rem;
 }
 
@@ -428,7 +443,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .large-text {
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .small-text {
@@ -441,38 +456,39 @@ li {
 
 /* Style for sofort button */
 #sofort {
-  color: white;
+  color: var(--button-text-color);
   padding: 10px 25px;
   margin-bottom: 20px;
   margin-right: 10px;
   cursor: pointer;
-  background: rgba(52, 139, 64, 0.42);
+  background: var(--button-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid rgba(255, 255, 255, 0.27);
+  border: 1px solid var(--card-border);
   border-radius: var(--border-radius);
   transition: transform var(--transition-speed);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
   font-family: "DIN W02 Light";
+  font-size: 16px;
 }
 
 #page-turn,
 #display-order,
 #mode
- {
-  background: rgba(52, 139, 64, 0.22);
+{
+  background: var(--logo-container-button-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid rgba(255, 255, 255, 0.27);
+  border: 1px solid var(--border-radius);
   border-radius: var(--border-radius);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
   transition: transform var(--transition-speed);
-  color: white;
+  color: var(--button-text-color);
   padding: 10px 25px;
   margin-bottom: 20px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   cursor: pointer;
   font-family: "DIN W02 Light";
   width: 80%;
@@ -505,7 +521,7 @@ li {
 /*  background: rgba(255, 255, 255, 0.3); */
   padding: 15px;
   border-radius: 15px;
-  border: 1px solid rgba (255, 255, 255, 0.3);
+  border: 1px solid var(--body-checkbox-border);
 	display: flex;
   justify-content: center; /* Centers horizontally */
   align-items: center;
@@ -525,17 +541,17 @@ li {
   cursor: pointer;
   width: 60px;
   height: 24px;
-  background-color: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-right: 1px solid rgba (255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--lable-glass-checkbox-background);
+  border: 1px solid var(--lable-glass-checkbox-border);
+  border-right: 1px solid var(--lable-glass-checkbox-border-right);
+  border-bottom: 1px solid var(--lable-glass-checkbox-border-bottom);
   box-shadow: 1px 1px 1px rgba (0, 0, 0, 0.1);
   backdrop-filter: blur(3px);
   border-radius: 40px;
   transition: background-color 0.4s;
 }
 .glass-checkbox:checked + .label-glass-checkbox {
-  background-color: rgba(52, 139, 64, 0.42);
+  background-color: var(--button-background);
   border-color: transparent;
 }
 
@@ -547,10 +563,10 @@ li {
   height: 36px;
   top: 50%;
   transform: translate(-12px, -50%);
-  background-color: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--lable-glass-checkbox-background);
+  border: 1px solid var(--lable-glass-checkbox-border);
+  border-right: 1px solid var(--lable-glass-checkbox-border-right);
+  border-bottom: 1px solid var(--lable-glass-checkbox-border-bottom);
   border-radius: 20px;
   transition: transform 0.4s;
   backdrop-filter: blur(7px);
