@@ -90,9 +90,9 @@ input[type="text"] {
 
 input[type="text"],
 input[type="datetime-local"],
-.event_div,
+.event-div,
 #upload-button,
-.event_div button {
+.event-div button {
   background: var(--card-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
@@ -102,12 +102,12 @@ input[type="datetime-local"],
   transition: transform var(--transition-speed);
 }
 
-#unconfirmed_event {
+#unconfirmed-event {
   border: 2px solid var(--unconfirmed-event-border);
   background: var(--unconfirmed-event-background);
 }
 
-#large_event {
+#large-event {
   border: 2px solid var(--large-event-border);
   background: var(--large-event-background);
 }
@@ -194,7 +194,7 @@ input[type="text"]:hover,
 input[type="datetime-local"]:hover,
 #upload-button:hover,
 #editor-container:hover,
-.event_div button:hover {
+.event-div button:hover {
   border-color: var(--hover-accent-color);
   /* transform: scale(1.02); */
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
@@ -258,7 +258,7 @@ input[type="datetime-local"]:hover,
   margin-top: 20px;
 }
 
-.event_div {
+.event-div {
   margin: 0 auto;
   width: 100%;
   text-align: center;
@@ -280,13 +280,13 @@ input[type="datetime-local"]:hover,
   padding: 0.5em 0;
 }
 
-.event_div:hover {
+.event-div:hover {
   /* transform: scale(1.025); */
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
-.event_div p {
+.event-div p {
   font-size: 16px;
   margin-bottom: 1em;
   margin-left: 5px;
@@ -296,7 +296,7 @@ input[type="datetime-local"]:hover,
   word-wrap: break-word;
 }
 
-.event_div button {
+.event-div button {
   color: white;
   padding: 10px 20px;
   margin-bottom: 20px;
@@ -333,19 +333,19 @@ label {
 input[type="text"],
 input[type="datetime-local"],
 #upload-button,
-.event_div button {
+.event-div button {
   font-size: 16px;
   font-family: "DIN W02 Light";
   font-weight: bold;
 }
 
-.event_div {
+.event-div {
   margin-bottom: 15px;
   text-align: center;
   align-items: center;
 }
 
-#text_container {
+#text-container {
   margin: 0 auto;
   margin-bottom: 20px;
   width: 90%;
@@ -365,16 +365,16 @@ input[type="datetime-local"],
   overflow-wrap: break-word;
 }
 
-#text_container p {
+#text-container p {
   text-align: justify;
   line-height: 1.2em;
   letter-spacing: -0.015em;
   font-size: 20px;
 }
 
-#text_container li {
+#text-container li {
   line-height: 1.2em;
-  font-size: 16px;
+  font-size: 20px;
   letter-spacing: -0.015rem;
 }
 

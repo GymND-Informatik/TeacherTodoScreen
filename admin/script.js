@@ -37,7 +37,7 @@ var quill = new Quill("#editor", {
 var loaded_events =
   '[{"event":"PHP Loading Failed Mad check your permissions lmao ot call me","text":"","von":"2023-11-08T00:00","bis":"2023-11-08T23:59"}]';
 events = JSON.parse(loaded_events);
-update();
+display();
 
 // Fetch the json file for the first time, write it into the events array and match the settings (mode, page_turn)
 fetch("../output.json")
@@ -48,7 +48,7 @@ fetch("../output.json")
       events = parsed.slice(1);
       mode_select.value = parsed[0].mode;
       page_turn_select.value = parsed[0].page_turn.toString();
-      update();
+      display();
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -106,7 +106,7 @@ function button_delete(button) {
         if (events[i].event == button.name) {
           // If they match, delete the element and rerender
           events.splice(i, 1);
-          update();
+          display();
           // Break the loop
           break;
         }
@@ -179,7 +179,7 @@ function button_edit(button) {
       }
       // Update the json since now the event doesn't exist anymore adn rerender
       write_into_json();
-      update();
+      display();
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -187,12 +187,12 @@ function button_edit(button) {
 }
 
 // Add event listener to change of display_order to instantly rerender with the new order
-display_order_select.addEventListener("change", update);
+display_order_select.addEventListener("change", display);
 // Add event listener to change of mode and instantly write it into json
 mode_select.addEventListener("change", write_into_json);
 
 // Update the HTML doc to display all the existing events
-function update() {
+function display() {
   // display order
   // option 1: earliest added
   // option 2: last added / reverse of option 1
@@ -254,13 +254,12 @@ function update() {
 
     // Add a new HTML element
     var print_text = x.text.replace(/\n/g, "<br>");
-    // console.log('printText', printText);
 
-    events_html += "<div class='event_div' ";
+    events_html += "<div class='event-div' ";
     if (x.large === "large") {
-      events_html += "id='large_event'";
+      events_html += "id='large-event'";
     } else if (x.large === "pending") {
-      events_html += "id='unconfirmed_event'";
+      events_html += "id='unconfirmed-event'";
     }
 
     events_html += ">" + "<p class='event'><b><font size=5>" + x.event;
@@ -270,7 +269,7 @@ function update() {
     events_html += "<div><b>" + date_von + " - " + date_bis + "</b></div></p>";
 
     if (x.text.replace(/<p><br><\/p>/g, "") !== "") {
-      events_html += "<div id='text_container'>" + print_text + "</div>";
+      events_html += "<div id='text-container'>" + print_text + "</div>";
     }
 
     events_html +=
@@ -280,7 +279,7 @@ function update() {
       "<button onclick='button_edit(this)' class='edit' name='" +
       x.event +
       "'>Bearbeiten</button><label>Anheften:</label>" +
-      "<div class='body-checkbox'> <input id='checkbox_" +
+      "<div class='pinned-body-checkbox'> <input id='pinned-checkbox-" +
       x.event +
       "' type='checkbox' onclick='pin(this)' class='glass-checkbox' name='" +
       x.event +
@@ -290,7 +289,7 @@ function update() {
       events_html += " checked";
     }
 
-    events_html += "><label for='checkbox_" +
+    events_html += "><label for='pinned-checkbox-" +
     x.event +
     "' class='label-glass-checkbox'></label></div>" +
     "</div>\n";
@@ -385,7 +384,7 @@ upload_button.addEventListener("click", function () {
       events.push(data);
       console.log("[upload] 6 Pushed data", events);
       // Update the display and update the output file
-      update();
+      display();
       write_into_json();
       console.log("[upload] 7 written into json", events);
 
@@ -423,7 +422,7 @@ function check_events() {
         var event_date = new Date(event.bis);
         if (date >= event_date) {
           events.splice(i, 1);
-          update();
+          display();
           change = true;
           // Break the loop
           break;
@@ -432,7 +431,7 @@ function check_events() {
       if (change) {
         write_into_json();
       }
-      update();
+      display();
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -448,12 +447,8 @@ function pin(checkbox) {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("1 begin fetch");
-      console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
       events = JSON.parse(loaded_events).slice(1);
-      console.log("3 fetched into array", events);
-      console.log("4 end fetch");
 
       var num_pinned = 0;
       for (var i = 0; i < events.length; i++) {
@@ -484,10 +479,10 @@ instant_button.addEventListener("click", function () {
   // Convert UTC time to local time
   const local_time =
     current_date_utc.getTime() - current_date_utc.getTimezoneOffset() * 60000;
-  const currentDateLocal = new Date(local_time);
+  const current_date_local = new Date(local_time);
 
   // Format the date as required by datetime-local input (YYYY-MM-DDTHH:MM)
-  const date_string = currentDateLocal.toISOString().substring(0, 16);
+  const date_string = current_date_local.toISOString().substring(0, 16);
 
   // Set the value of the datetime input
   input_from.value = date_string;
