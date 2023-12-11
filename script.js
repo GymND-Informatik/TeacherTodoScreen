@@ -58,6 +58,7 @@ function fetchData() {
       const data = JSON.parse(_data);
       const _events = data.slice(1);
       const _interval = data[0].page_turn;
+      console.log(_interval);
       const _mode = data[0].mode;
       var i = 1;
       _events.forEach((event) => {

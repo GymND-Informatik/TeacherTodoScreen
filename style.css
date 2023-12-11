@@ -99,6 +99,7 @@ p {
   margin: 0rem 0rem 0.6rem 0rem;
   font-size: 2.4rem;
   line-height: 1.085em;
+  color: var(--text);
 }
 
 strong {
@@ -133,7 +134,7 @@ h5 {
   /* box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1); */
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  max-height: 30rem;
+  max-height: 40vh;
   background: var(--eventBackground);
   overflow: hidden;
 }
@@ -155,7 +156,7 @@ h5 {
 }
 
 .small-text {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: "DIN W02 Light";
   /* font-family: 'badSchoolFontDINNextN0Light'; */
   /* font-weight: normal; */
@@ -170,6 +171,7 @@ li {
   /*font-weight: normal;*/
   margin: 0rem 0rem 0.6rem 0rem;
   line-height: 1.085em;
+  color: var(--text);
 }
 
 .large-text {
