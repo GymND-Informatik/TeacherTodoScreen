@@ -22,5 +22,6 @@
 - [x] make sure backend always knows whether an event fits
 - [ ] clean up console logs (kubo, no one else will do this i need them)
 - [ ] format code
+- [ ] change default theme of frontend to light mode
 - [ ] rename variables and functions everywhere
 - [x] fix small text not working on frontend
