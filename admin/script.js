@@ -1,23 +1,21 @@
 // Initiate all variables
-var arrallevents = [];
+var events = [];
 
-var _event = document.getElementById("event");
-var von_time = document.getElementById("von_time");
-var bis_time = document.getElementById("bis_time");
-var jsonBtn = document.getElementById("jsonbtn");
-var all_events = document.getElementById("displayallevents");
-var sofort = document.getElementById("sofort");
-var dropdown = document.getElementById("page-turn");
-var interval_button = document.getElementById("submit_interval");
-var change_interval = 5;
-var display_order = document.getElementById("display-order");
-var mode = document.getElementById("mode");
-var mode_button = document.getElementById("submit_mode");
+var input_event = document.getElementById("event");
+var input_from = document.getElementById("von_time");
+var input_to = document.getElementById("bis_time");
+var upload_button = document.getElementById("jsonbtn");
+var events_display = document.getElementById("displayallevents");
+var instant_button = document.getElementById("sofort");
+var page_turn_select = document.getElementById("page-turn");
+var page_turn_interval = 5;
+var display_order_select = document.getElementById("display-order");
+var mode_select = document.getElementById("mode");
 
 // ----------------------------------------------------
 
 // Quill configuration
-var toolbarOptions = [
+var toolbar_options = [
   ["bold", "italic", "underline"],
   [{ color: [] }],
   [{ size: ["small", false, "large"] }],
@@ -30,7 +28,7 @@ var quill = new Quill("#editor", {
   theme: "snow",
   placeholder: "Beschreiben Sie das Event...",
   modules: {
-    toolbar: toolbarOptions,
+    toolbar: toolbar_options,
   },
 });
 
@@ -39,44 +37,42 @@ var quill = new Quill("#editor", {
 // Load all the events from the JSON file into the array  (hard coded to know if php failed)
 var loaded_events =
   '[{"event":"PHP Loading Failed Mad check your permissions lmao ot call me","text":"","von":"2023-11-08T00:00","bis":"2023-11-08T23:59"}]';
-arrallevents = JSON.parse(loaded_events);
+events = JSON.parse(loaded_events);
 update();
 
-// Read the JSON, hope it works
-read_json(true);
-
-// -------------------------------------------------------
-
-dropdown.addEventListener("change", function () {
-  console.log(dropdown.value);
-  //for (var i = 0; i < arrallevents.length; i++) {
-  //arrallevents[i].page_turn = dropdown.value;
-  //}
-  change_interval = dropdown.value;
-  write_into_json();
-});
-
-// Funtion to read the json file and update the arrallevents array
-function read_json(_update) {
-  fetch("../output.json")
+// Fetch the json file for the first time, write it into the events array and match the settings (mode, page_turn)
+fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
       console.log("1 begin fetch");
       console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
       var parsed = JSON.parse(loaded_events);
-      arrallevents = parsed.slice(1);
-      mode.value = parsed[0].mode;
-      dropdown.value = parsed[0].page_turn.toString();
-      console.log("3 fetched into array", arrallevents, change_interval, mode);
-      if (_update) {
-        update();
-      }
+      events = parsed.slice(1);
+      mode_select.value = parsed[0].mode;
+      page_turn_select.value = parsed[0].page_turn.toString();
+      console.log("3 fetched into array", events, page_turn_interval, mode_select);
+      update();
       console.log("4 end fetch");
     })
     .catch((error) => {
       console.error("Error:", error);
     });
+
+// -------------------------------------------------------
+
+page_turn_select.addEventListener("change", function () {
+  console.log(page_turn_select.value);
+  //for (var i = 0; i < arrallevents.length; i++) {
+  //arrallevents[i].page_turn = dropdown.value;
+  //}
+  page_turn_interval = page_turn_select.value;
+  write_into_json();
+});
+
+// Funtion to read the json file and update the arrallevents array
+function read_json(_update) {
+  
 }
 
 // Pad a number with zeroes in front (used for dates)
@@ -88,9 +84,9 @@ function pad(num, size) {
 
 // Write it into a simple JSON file server-side called output.json
 function write_into_json() {
-  console.log(change_interval, JSON.stringify(arrallevents));
-  const temp = [{'page_turn': change_interval, 'mode': mode.value}, ...arrallevents];
-  console.log(temp, mode.value);
+  console.log(page_turn_interval, JSON.stringify(events));
+  const temp = [{'page_turn': page_turn_interval, 'mode': mode_select.value}, ...events];
+  console.log(temp, mode_select.value);
   fetch("saveFile.php", {
     method: "POST",
     headers: {
@@ -115,15 +111,15 @@ function button_delete(button) {
       console.log("1 begin fetch");
       console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
-      arrallevents = JSON.parse(loaded_events).slice(1);
-      console.log("3 fetched into array", arrallevents);
+      events = JSON.parse(loaded_events).slice(1);
+      console.log("3 fetched into array", events);
       console.log("4 end fetch");
 
       // Loop through all the elements in arrallevents and see if they match with the button
-      for (var i = 0; i < arrallevents.length; i++) {
-        if (arrallevents[i].event == button.name) {
+      for (var i = 0; i < events.length; i++) {
+        if (events[i].event == button.name) {
           // If they match, delete the element and rerender
-          arrallevents.splice(i, 1);
+          events.splice(i, 1);
           update();
           // Break the loop
           break;
@@ -137,7 +133,7 @@ function button_delete(button) {
 }
 
 // Sanitize HTML (good practice)
-function sanitizeHTML(html) {
+function sanitize_html(html) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
 
@@ -146,7 +142,7 @@ function sanitizeHTML(html) {
 }
 
 // Clean up some details from the raw HTML for it to fit into quill
-function cleanQuillHTML(html) {
+function clean_quill_html(html) {
   var ret;
   ret = html.replace("<p><br></p>", "");
   return ret;
@@ -162,17 +158,17 @@ function button_edit(button) {
       console.log("1 begin fetch");
       console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
-      arrallevents = JSON.parse(loaded_events).slice(1);
-      console.log("3 fetched into array", arrallevents);
+      events = JSON.parse(loaded_events).slice(1);
+      console.log("3 fetched into array", events);
       console.log("4 end fetch");
 
-      for (var i = 0; i < arrallevents.length; i++) {
-        if (arrallevents[i].event == button.name) {
+      for (var i = 0; i < events.length; i++) {
+        if (events[i].event == button.name) {
           // If they match, delete the element and rerender
-          _event.value = arrallevents[i].event;
+          input_event.value = events[i].event;
 
           // Read the text from the events array
-          var text = arrallevents[i].text;
+          var text = events[i].text;
 
           // Adjust it so that quill can work with it
           var new_text = text.replace(/large-text/g, "ql-size-large");
@@ -183,18 +179,19 @@ function button_edit(button) {
 
           // Paste it in, but do some modifications after that
           quill.clipboard.dangerouslyPasteHTML(html_string);
-          quill.root.innerHTML = cleanQuillHTML(quill.root.innerHTML);
+          quill.root.innerHTML = clean_quill_html(quill.root.innerHTML);
 
           // Enter the time
-          von_time.value = arrallevents[i].von;
-          bis_time.value = arrallevents[i].bis;
+          input_from.value = events[i].von;
+          input_to.value = events[i].bis;
 
           // Delete it from the arrallevents
-          arrallevents.splice(i, 1);
+          events.splice(i, 1);
           // Break the loop
           break;
         }
       }
+      // Update the json since now the event doesn't exist anymore adn rerender
       write_into_json();
       update();
     })
@@ -203,99 +200,97 @@ function button_edit(button) {
     });
 }
 
-display_order.addEventListener("change", update);
-
-mode.addEventListener("change", write_into_json);
+// Add event listeners to change of mode and display_order to instantly write it into json / rerender with the new order
+display_order_select.addEventListener("change", update);
+mode_select.addEventListener("change", write_into_json);
 
 // Update the HTML doc to display all the existing events
 function update() {
-  // Display all the existent events in a buffer
-
-  // TODO display order
+  // display order
   // option 1: earliest added
   // option 2: last added / reverse of option 1
   // option 3: lastest date last, earliest date first (e.g.  run out in 10 secs from now first, run out in 2 days from now last)
   // option 4: reverse of option 3
-  var event_string = "";
+  var events_html = "";
 
 //  var option = "1";
 //  var option = "2";
 //  var option = "3";
 //  var option = "4";
-  var option = display_order.value;
+  var option = display_order_select.value;
   var ordered_events = [];
 
   if (option === "1") {
     // simplest case: just in the order they were added, newest on top, this is the way it is always in the arrallevents array
-    for (var i = 0; i < arrallevents.length; i++) {
-      ordered_events.push(arrallevents[i]);
+    for (var i = 0; i < events.length; i++) {
+      ordered_events.push(events[i]);
     }
   }
   else if (option === "2") {
     // reverse the order of arrallevents
-    for (var i = 0; i < arrallevents.length; i++) {
-      ordered_events.push(arrallevents[arrallevents.length - i - 1]);
+    for (var i = 0; i < events.length; i++) {
+      ordered_events.push(events[events.length - i - 1]);
     }
   }
   else if (option === "3") {
-    ordered_events = [...arrallevents].sort((a,b) => a.bis - b.bis);
+    // sort by bis_date, earliest to lastest
+    ordered_events = [...events].sort((a,b) => a.bis - b.bis);
     ordered_events.sort((a,b) => {return new Date(a.bis).getTime() - new Date(b.bis).getTime();});
   }
   else if (option === "4") {
-    ordered_events = arrallevents;
+    // sort in opposite order as option 3
+    ordered_events = events;
     ordered_events.sort((a,b) => {return new Date(b.bis).getTime() - new Date(a.bis).getTime();});
   }
 
-  ordered_events.forEach(function (arrayItem) {
-    var x = arrayItem;
-
-    var von_ = new Date(x.von);
-    var bis_ = new Date(x.bis);
+  ordered_events.forEach(function (x) {
+    var von_date = new Date(x.von);
+    var bis_date = new Date(x.bis);
 
     // Convert date to a readable string
     var date_von =
-      von_.getDate() +
+      von_date.getDate() +
       "." +
-      (von_.getMonth() + 1) +
+      (von_date.getMonth() + 1) +
       "." +
-      von_.getFullYear() +
+      von_date.getFullYear() +
       " " +
-      pad(von_.getHours(), 2) +
+      pad(von_date.getHours(), 2) +
       ":" +
-      pad(von_.getMinutes(), 2);
+      pad(von_date.getMinutes(), 2);
     var date_bis =
-      bis_.getDate() +
+      bis_date.getDate() +
       "." +
-      (bis_.getMonth() + 1) +
+      (bis_date.getMonth() + 1) +
       "." +
-      bis_.getFullYear() +
+      bis_date.getFullYear() +
       " " +
-      pad(bis_.getHours(), 2) +
+      pad(bis_date.getHours(), 2) +
       ":" +
-      pad(bis_.getMinutes(), 2);
+      pad(bis_date.getMinutes(), 2);
 
     // Add a new HTML element
     printText = x.text.replace(/\n/g, "<br>");
     // console.log('printText', printText);
 
-    event_string += "<div class='event_div' ";
+    events_html += "<div class='event_div' ";
     if (x.large === "large") {
-      event_string += "id='large_event'";
+      events_html += "id='large_event'";
     } else if (x.large === "pending") {
-      event_string += "id='unconfirmed_event'";
+      events_html += "id='unconfirmed_event'";
     }
 
-    event_string += ">" + "<p class='event'><b><font size=5>" + x.event;
+    events_html += ">" + "<p class='event'><b><font size=5>" + x.event;
 
-    event_string += "</font></b>";
+    events_html += "</font></b>";
 
-    event_string += "<div><b>" + date_von + " - " + date_bis + "</b></div></p>";
+    events_html += "<div><b>" + date_von + " - " + date_bis + "</b></div></p>";
 
     if (x.text.replace(/<p><br><\/p>/g, "") !== "") {
-      event_string += "<div id='text_container'>" + printText + "</div>";
+      events_html += "<div id='text_container'>" + printText + "</div>";
     }
 
-    event_string +=
+    events_html +=
       "<button onclick='button_delete(this)' class='delete' name='" +
       x.event +
       "'>Löschen</button>" +
@@ -309,22 +304,22 @@ function update() {
       "'";
 
     if (x.pinned) {
-      event_string += " checked";
+      events_html += " checked";
     }
 
-    event_string += "><label for='checkbox_" +
+    events_html += "><label for='checkbox_" +
     x.event +
     "' class='label-glass-checkbox'></label></div>" +
     "</div>\n";
   });
 
-  console.log("7 rendered", arrallevents);
+  console.log("7 rendered", events);
   //  console.log('events_string', event_string);
-  all_events.innerHTML = event_string;
+  events_display.innerHTML = events_html;
 }
 
 // Retrieve HTML content from Quill editor
-function getContentAsHTML() {
+function get_content_as_html() {
   var delta = quill.getContents();
 
   var tempCont = document.createElement("div");
@@ -335,7 +330,7 @@ function getContentAsHTML() {
 }
 
 // Modify the HTML from quill to be compatible with the backend display AND the frontend
-function modifyQuillHTML(htmlContent) {
+function modify_quill_html(htmlContent) {
   var modifiedHTML = htmlContent;
   modifiedHTML = modifiedHTML.replace(/ql-size-large/g, "large-text");
   modifiedHTML = modifiedHTML.replace(/ql-size-small/g, "small-text");
@@ -344,51 +339,52 @@ function modifyQuillHTML(htmlContent) {
 }
 
 // The "hochladen" button, used to add new events
-jsonBtn.addEventListener("click", function () {
+upload_button.addEventListener("click", function () {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
       console.log("1 begin fetch");
       console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
-      arrallevents = JSON.parse(loaded_events).slice(1);
-      console.log("3 fetched into array", arrallevents);
+      events = JSON.parse(loaded_events).slice(1);
+      console.log("3 fetched into array", events);
       console.log("4 end fetch");
-      console.log("5 read", arrallevents);
-      var text = getContentAsHTML();
-      text = modifyQuillHTML(text);
+      console.log("5 read", events);
+      var text = get_content_as_html();
+      text = modify_quill_html(text);
 
       // console.log('quill output', text);
       var data = {
-        event: _event.value,
+        event: input_event.value,
         text: text,
-        von: von_time.value,
-        bis: bis_time.value,
+        von: input_from.value,
+        bis: input_to.value,
         pinned: false,
         large: "pending",
       };
 
       // SAFEGUARDS
-      if (_event.value.includes("'")) {
+      if (input_event.value.includes("'")) {
         alert("Das Zeichen ' darf nicht im Eventnamen sein!");
         return;
       }
-      if (_event.value == "") {
+      if (input_event.value == "") {
         alert("Kein Event angegeben!");
         return;
       }
-      if (!(isNaN(von_time.value) && isNaN(bis_time.value))) {
+      if (!(isNaN(input_from.value) && isNaN(input_to.value))) {
         alert("Datum muss angegeben sein!");
         return;
       }
       // Check for time travelling
-      var von_ = new Date(von_time.value);
-      var bis_ = new Date(bis_time.value);
+      var von_ = new Date(input_from.value);
+      var bis_ = new Date(input_to.value);
       if (bis_ <= von_) {
         alert("Das Enddatum muss später als das Startdatum sein!");
         return;
       }
       var current_date = new Date();
+      // TODO check if this does ANYTHING anymore
       if (
         bis_ <= current_date - 1 * 60 * 1000 ||
         von_ <= current_date + 1 * 60 * 1000
@@ -396,42 +392,31 @@ jsonBtn.addEventListener("click", function () {
         alert("Das Enddatum und das Begindatum muss in der Zukunft sein!");
         return;
       }
-      for (var i = 0; i < arrallevents.length; i++) {
-        if (arrallevents[i].event == data.event) {
+      for (var i = 0; i < events.length; i++) {
+        if (events[i].event == data.event) {
           alert("Nicht dasselbe Event zweimal eintragen!");
           return;
         }
       }
 
       // Write it in
-      arrallevents.push(data);
-      console.log("6 Pushed data", arrallevents);
+      events.push(data);
+      console.log("6 Pushed data", events);
       // Update the display and update the output file
       update();
       write_into_json();
-      console.log("8 written into json", arrallevents);
+      console.log("8 written into json", events);
 
       // Clear the inputs
-      _event.value = "";
+      input_event.value = "";
       quill.clipboard.dangerouslyPasteHTML("");
-      von_time.value = "";
-      bis_time.value = "";
+      input_from.value = "";
+      input_to.value = "";
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 });
-
-// Check if a date is between two other dates, needed to find out if an event is supposed to be deleted
-function isDateBetween(checkDate, startDate, endDate) {
-  // Convert the string dates to Date objects
-  var check = new Date(checkDate);
-  var start = new Date(startDate);
-  var end = new Date(endDate);
-
-  // Check if the checkDate is between startDate and endDate
-  return check > start && check < end;
-}
 
 // Check the dates to see if they belong into oblivion
 function check_events() {
@@ -441,16 +426,16 @@ function check_events() {
       console.log("1 begin fetch - cheking events");
       console.log("2 raw", data); // Log the content of the file
       loaded_events = JSON.parse(data);
-      arrallevents = loaded_events.slice(1);
+      events = loaded_events.slice(1);
       console.log(loaded_events[0].mode, loaded_events[0].page_turn);
-      mode.value = loaded_events[0].mode;
-      dropdown.value = loaded_events[0].page_turn.toString();
-      console.log("3 fetched into array", arrallevents);
+      mode_select.value = loaded_events[0].mode;
+      page_turn_select.value = loaded_events[0].page_turn.toString();
+      console.log("3 fetched into array", events);
       console.log("4 end fetch");
 
       var change = false;
-      for (var i = 0; i < arrallevents.length; i++) {
-        var event = arrallevents[i];
+      for (var i = 0; i < events.length; i++) {
+        var event = events[i];
         // WARNING: since time is different on pi this might pose a problem
         var currentDateUTC = new Date();
         const localTime =
@@ -458,7 +443,7 @@ function check_events() {
         var date = new Date(currentDateUTC);
         var event_date = new Date(event.bis);
         if (date >= event_date) {
-          arrallevents.splice(i, 1);
+          events.splice(i, 1);
           update();
           change = true;
           // Break the loop
@@ -478,7 +463,7 @@ function check_events() {
     });
 }
 
-// Check every ten seconds, can be expanded, TODO might change the entire system
+// Check every five seconds, can be expanded
 setInterval(check_events, 5000);
 
 // Pin an event (mark it as pinned, will take effect only on the frontend)
@@ -489,36 +474,34 @@ function pin(checkbox) {
       console.log("1 begin fetch");
       console.log("2 raw", data); // Log the content of the file
       loaded_events = data;
-      arrallevents = JSON.parse(loaded_events).slice(1);
-      console.log("3 fetched into array", arrallevents);
+      events = JSON.parse(loaded_events).slice(1);
+      console.log("3 fetched into array", events);
       console.log("4 end fetch");
-    
-  var num_pinned = 0;
-  for (var i = 0; i < arrallevents.length; i++) {
-    if (arrallevents[i].pinned) num_pinned++;
-  }
-  if (num_pinned >= 2 && checkbox.checked) {
-   setTimeout(() => {checkbox.checked = false; console.log("asdasdasdsad")}, 0);
-   alert('Es können nicht mehr als 2 Events angeheftet sein!');
-   return;
-  }
-  for (var i = 0; i < arrallevents.length; i++) {
-    if (arrallevents[i].event == checkbox.name) {
-      arrallevents[i].pinned = checkbox.checked;
-      break;
-    }
-  }
 
-  write_into_json();
-
-
+      var num_pinned = 0;
+      for (var i = 0; i < events.length; i++) {
+        if (events[i].pinned) num_pinned++;
+      }
+      if (num_pinned >= 2 && checkbox.checked) {
+        setTimeout(() => { checkbox.checked = false;}, 0);
+        alert('Es können nicht mehr als 2 Events angeheftet sein!');
+        return;
+      }
+      for (var i = 0; i < events.length; i++) {
+        if (events[i].event == checkbox.name) {
+          events[i].pinned = checkbox.checked;
+          break;
+        }
+      }
+      write_into_json();
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
 
-sofort.addEventListener("click", function () {
+// On button press just fill in the input_from with the current date in the correct format
+instant_button.addEventListener("click", function () {
   const currentDateUTC = new Date();
 
   // Convert UTC time to local time
@@ -530,5 +513,5 @@ sofort.addEventListener("click", function () {
   const dateString = currentDateLocal.toISOString().substring(0, 16);
 
   // Set the value of the datetime input
-  von_time.value = dateString;
+  input_from.value = dateString;
 });

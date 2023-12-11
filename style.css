@@ -1,23 +1,25 @@
 /* @media (prefers-color-scheme: light) { */
-  :root[data-theme="light"] {
-    --text: #07202c;
-    --background: #ffffff;
-    --primary: #86ad87;
-    --secondary: #9fc8a1;
-    /* --accent: #384751; */
-    --accent: #dddedf;
-    --eventBackground: #f3f3f4;
-  }
+:root[data-theme="light"] {
+  --text: #07202c;
+  --background: #ffffff;
+  --primary: #86ad87;
+  --secondary: #9fc8a1;
+  /* --accent: #384751; */
+  --accent: #dddedf;
+  --eventBackground: #f3f3f4;
+}
+
 /* } */
 /* @media (prefers-color-scheme: dark) { */
-  :root[data-theme="dark"] {
-    --text: #d3ecf8;
-    --background: #161718;
-    --primary: #75cc82;
-    --secondary: #568666;
-    --accent: #383c3f;
-    --eventBackground: #1d1e1f;
-  }
+:root[data-theme="dark"] {
+  --text: #d3ecf8;
+  --background: #161718;
+  --primary: #75cc82;
+  --secondary: #568666;
+  --accent: #383c3f;
+  --eventBackground: #1d1e1f;
+}
+
 /* } */
 @font-face {
   font-family: "badSchoolFontDIN1451W02Engschrift";
@@ -55,29 +57,29 @@ body {
 .container {
   height: calc(100vh - 3rem);
   width: 120px;
-  position: absolute; 
+  position: absolute;
   top: 1.5rem;
   left: 1.5rem;
   background: var(--secondary);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   border-radius: 15px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 h1 {
   transform: rotate(-90deg);
-  transform-origin: left top; 
+  transform-origin: left top;
   margin: 0;
   font-weight: 550;
   font-size: 6rem;
   line-height: 5rem;
   letter-spacing: 0px;
   color: var(--text);
-  width: calc(100vh - 3rem); 
-  height: 120px; 
+  width: calc(100vh - 3rem);
+  height: 120px;
   position: absolute;
-  top: 75%; 
-  left: 13.5%; 
+  top: 75%;
+  left: 13.5%;
 }
 
 
@@ -94,7 +96,6 @@ h2 {
 
 p {
   font-family: "DIN W02 Light";
-  /* font-family: 'badSchoolFontDINNextN0Light'; */
   font-weight: normal;
   margin: 0rem 0rem 0.6rem 0rem;
   font-size: 2.4rem;
