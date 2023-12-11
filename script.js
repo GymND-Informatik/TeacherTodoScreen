@@ -1,16 +1,17 @@
 // Define constants and variables
 const events = document.getElementById("events");
-const pageElement = document.getElementById("page");
-let allElements = [];
+const page_element = document.getElementById("page");
+let all_elements = [];
 let page = 0;
 const ELEMENTSPERPAGE = 4;
 let page_turn_interval = undefined;
 var counter = 0;
-var refreshInterval = 0;
-var pinnedElements = [];
+var refresh_interval = 0;
+var pinned_elements = [];
 var first_fetch = false;
 var mode = 'dark';
 
+// set theme right in the begging otherwise everything is white
 document.documentElement.setAttribute('data-theme', mode);
 
 // Function to pad a number with leading zeros
@@ -21,7 +22,7 @@ function pad(num, size) {
 }
 
 // Function to check if a date is between two other dates
-function isDateBetween(checkDate, startDate, endDate) {
+function is_date_between(checkDate, startDate, endDate) {
   // Convert the string dates to Date objects
   var check = new Date(checkDate);
   var start = new Date(startDate);
@@ -49,21 +50,19 @@ function write_into_json(data) {
 }
 
 // Function to fetch data and process events
-function fetchData() {
+function fetch_data() {
   fetch("output.json")
     .then((response) => response.text())
     .then((_data) => {
-      allElements = [];
-      pinnedElements = [];
+      all_elements = [];
+      pinned_elements = [];
       const data = JSON.parse(_data);
       const _events = data.slice(1);
       const _interval = data[0].page_turn;
-      console.log(_interval);
       const _mode = data[0].mode;
       var i = 1;
       _events.forEach((event) => {
-        console.log(event);
-        if (isDateBetween(new Date(), event.von, event.bis)) {
+        if (is_date_between(new Date(), event.von, event.bis)) {
           var text = event.text.replace(/\n/g, "<br>");
           const heading = `<h2>${event.event}</h2>`;
           text = `<p>${text}</p>`;
@@ -72,18 +71,16 @@ function fetchData() {
           element.classList.add("event");
 
           events.append(element);
-          console.log(element.scrollHeight, element.clientHeight);
           if (element.scrollHeight > element.clientHeight) {
             data[i].large = "large";
-            console.log("too large", data[i]);
           } else {
             data[i].large = "fine";
           }
           events.removeChild(element);
           if (event.pinned) {
             element.classList.add("pinned");
-            pinnedElements.push(element);
-          } else allElements.push(element);
+            pinned_elements.push(element);
+          } else all_elements.push(element);
         }
         i += 1;
       });
@@ -92,24 +89,21 @@ function fetchData() {
         page_turn_interval !== _interval * 1000
       ) {
         page_turn_interval = _interval * 1000;
-        clearInterval(refreshInterval); // Clear the previous interval
-        runRefresh(); // Run immediately with the new interval
-        refreshInterval = setInterval(runRefresh, page_turn_interval); // Set the new interval
+        clearInterval(refresh_interval); // Clear the previous interval
+        run_refresh(); // Run immediately with the new interval
+        refresh_interval = setInterval(run_refresh, page_turn_interval); // Set the new interval
       }
-      console.log("writing", data);
-      console.log("pinned", pinnedElements);
       mode = _mode;
       document.documentElement.setAttribute('data-theme', mode);
       write_into_json(data);
 
-      for (var i = 0; i < allElements.length; i++) {
+      for (var i = 0; i < all_elements.length; i++) {
         if (i % ELEMENTSPERPAGE === 0) {
-	  for (var j = 0; j < pinnedElements.length; j++) {
-            allElements.splice(i, 0, pinnedElements[j]);
+	  for (var j = 0; j < pinned_elements.length; j++) {
+            all_elements.splice(i, 0, pinned_elements[j]);
 	  }
         }
       }
-      console.log('sadas', allElements);
       first_fetch = true;
     }) // <- Missing closing parenthesis here
     .catch((error) => {
@@ -120,37 +114,36 @@ function fetchData() {
 // Initial fetch of data
 // fetchData();
 // Set intervals for refreshing data and fetching new data
-fetchData();
-setInterval(fetchData, 5000);
+fetch_data();
+setInterval(fetch_data, 5000);
 
 // Function to append elements to the events container
-function appendElements(lst) {
+function append_elements(lst) {
   lst.forEach((el) => {
-    console.log('appending event', el);
     if (el !== undefined) events.append(el);
   });
 }
 
 // Function to refresh the displayed events
-function runRefresh() {
+function run_refresh() {
 //  console.log(allElements);
   if (!first_fetch) return;
 
-  if (page * ELEMENTSPERPAGE >= allElements.length) {
+  if (page * ELEMENTSPERPAGE >= all_elements.length) {
     page = 0;
     return;
   }
   events.innerHTML = "";
-  if (allElements.length === 0) return;
+  if (all_elements.length === 0) return;
 
   let lst = [];
   for (let i = page * ELEMENTSPERPAGE; i < (page + 1) * ELEMENTSPERPAGE; i++) {
-    lst.push(allElements[i]);
+    lst.push(all_elements[i]);
   }
 
-  appendElements(lst);
+  append_elements(lst);
 
-  pageElement.innerHTML = page + 1;
+  page_element.innerHTML = page + 1;
 
   page++;
   if (lst.pop() === undefined) page = 0;
