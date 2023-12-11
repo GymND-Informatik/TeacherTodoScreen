@@ -480,7 +480,7 @@ li {
   background: var(--logo-container-button-background);
   backdrop-filter: blur(8.8px);
   -webkit-backdrop-filter: blur(8.8px);
-  border: 1px solid var(--border-radius);
+  border: 1px solid var(--card-border);
   border-radius: var(--border-radius);
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
