@@ -18,8 +18,8 @@
 
   <div class="logo-container">
     <img src="logo.png" class="logo"><br><br><br>
-    <label for"page-turn">Zeit zum Umblättern</label>
-    <select id="page-turn">
+    <label for"page-turn-select">Zeit zum Umblättern</label>
+    <select id="page-turn-select">
       <option value='5'>5 Sekunden</option>
       <option value='10'>10 Sekunden</option>
       <option value='15'>15 Sekunden</option>
@@ -28,16 +28,16 @@
       <option value='60'>1 Minute</option>
     </select>
 
-    <label for"display-order">Anzeige</label>
-    <select id="display-order">
+    <label for"display-order-select">Anzeige</label>
+    <select id="display-order-select">
       <option value='1'>First Added</option>
       <option value='2'>Last Added</option>
       <option value='3'>Earliest End</option>
       <option value='4'>Latest End</option>
     </select>
 
-    <label for"mode">Modus</label>
-    <select id="mode">
+    <label for"mode-select">Modus</label>
+    <select id="mode-select">
       <option value='dark'>Dunkel</option>
       <option value='light'>Hell</option>
     </select>
@@ -45,9 +45,9 @@
 
 
   <div class="wrapper">
-    <div class="form-container">
-      <label for="event">Event:</label>
-      <input id="event" type="text" placeholder="Geben Sie den Eventnamen ein...">
+    <div class="input-container">
+      <label for="event-input">Event:</label>
+      <input id="event-input" type="text" placeholder="Geben Sie den Eventnamen ein...">
 
 
       <label for="editor-container">Text:</label>
@@ -56,21 +56,20 @@
       </div>
       <!-- <textarea id="text" placeholder="Beschreiben Sie das Event..."></textarea> -->
 
-      <label for="von_time">Von:</label>
-      <input type="datetime-local" id="von_time" placeholder="Startdatum und -Zeit">
-      <button id="sofort">Sofort</button>
+      <label for="from-time">Von:</label>
+      <input type="datetime-local" id="from-time" placeholder="Startdatum und -Zeit">
+      <button id="instant-button">Sofort</button>
 
-      <label for="bis_time">Bis:</label>
-      <input type="datetime-local" id="bis_time" placeholder="Enddatum und -zeit">
+      <label for="to-time">Bis:</label>
+      <input type="datetime-local" id="to-time" placeholder="Enddatum und -zeit">
 
-      <button id="jsonbtn">Hochladen</button>
+      <button id="upload-button">Hochladen</button>
     </div>
 
-    <div class="form-container2">
-      <p id="displayallevents"></p>
+    <div class="events-container">
+      <p id="events-display"></p>
     </div>
   </div>
-
 
   <script src="script.js"></script>
 </body>
