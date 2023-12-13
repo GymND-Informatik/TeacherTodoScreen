@@ -10,7 +10,7 @@ var page_turn_select = document.getElementById("page-turn-select");
 var page_turn_interval = 5;
 var display_order_select = document.getElementById("display-order-select");
 var mode_select = document.getElementById("mode-select");
-
+var writing = false;
 // ----------------------------------------------------
 
 // Quill configuration
@@ -71,7 +71,7 @@ function pad(num, size) {
 
 // Write it into a simple JSON file server-side ../output.json
 function write_into_json() {
-  const temp = [{'page_turn': page_turn_interval, 'mode': mode_select.value}, ...events];
+ const temp = [{'page_turn': page_turn_interval, 'mode': mode_select.value}, ...events];
   console.log(temp, mode_select.value);
   fetch("saveFile.php", {
     method: "POST",
@@ -91,6 +91,7 @@ function write_into_json() {
 
 // Delete an event (will be activated on_click)
 function button_delete(button) {
+  writing = true;
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
@@ -116,6 +117,7 @@ function button_delete(button) {
     .catch((error) => {
       console.error("Error:", error);
     });
+  writing = false;
 }
 
 // Sanitize HTML (good practice)
@@ -137,6 +139,7 @@ function clean_quill_html(html) {
 // Edit an event (will be activated on_click)
 // Will delete the old event and put the current data into the input fields
 function button_edit(button) {
+  writing = true;
   // Loop through all the elements in arrallevents and see if they match with the button
   fetch("../output.json")
     .then((response) => response.text())
@@ -184,6 +187,7 @@ function button_edit(button) {
     .catch((error) => {
       console.error("Error:", error);
     });
+  writing = false;
 }
 
 // Add event listener to change of display_order to instantly rerender with the new order
@@ -322,6 +326,7 @@ function modify_quill_html(htmlContent) {
 
 // The "hochladen" button, used to add new events
 upload_button.addEventListener("click", function () {
+  writing = true;
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
@@ -397,10 +402,12 @@ upload_button.addEventListener("click", function () {
     .catch((error) => {
       console.error("Error:", error);
     });
+    writing = false;
 });
 
 // Check the dates to see if they belong into oblivion
 function check_events() {
+  if (writing) {console.log('aborted check c something else is writing'); return;}
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
@@ -440,10 +447,11 @@ function check_events() {
 
 // Check every five seconds, can be expanded
 // TODO might do a thung where i mark a boolean as 'fetching' and do not perform writes or edits during the entirity of check_dates()
-setInterval(check_events, 5000);
+setInterval(check_events, 1000);
 
 // Pin an event (mark it as pinned, will take effect only on the frontend)
 function pin(checkbox) {
+    writing = true;
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
@@ -470,6 +478,7 @@ function pin(checkbox) {
     .catch((error) => {
       console.error("Error:", error);
     });
+    writing = false;
 }
 
 // On button press just fill in the input_from with the current date in the correct format
