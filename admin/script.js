@@ -370,12 +370,13 @@ upload_button.addEventListener("click", function () {
         return;
       }
       var current_date = new Date();
+
       // TODO check if this does ANYTHING anymore
+      console.log(current_date.getTime() - 1 * 60 * 1000, bis_.getTime());
       if (
-        bis_ <= current_date - 1 * 60 * 1000 ||
-        von_ <= current_date + 1 * 60 * 1000
+        von_.getTime() <= current_date - 1 * 60 * 1000
       ) {
-        alert("Das Enddatum und das Begindatum muss in der Zukunft sein!");
+        alert("Das Begindatum muss in der Zukunft sein!");
         return;
       }
       for (var i = 0; i < events.length; i++) {
