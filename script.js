@@ -9,11 +9,11 @@ var counter = 0;
 var refresh_interval = 0;
 var pinned_elements = [];
 var first_fetch = false;
-var mode = 'dark';
+var mode = "dark";
 var fetching = false;
 
 // set theme right in the begging otherwise everything is white
-document.documentElement.setAttribute('data-theme', mode);
+document.documentElement.setAttribute("data-theme", mode);
 
 // Function to pad a number with leading zeros
 function pad(num, size) {
@@ -96,17 +96,21 @@ function fetch_data() {
         refresh_interval = setInterval(run_refresh, page_turn_interval); // Set the new interval
       }
       mode = _mode;
-      document.documentElement.setAttribute('data-theme', mode);
+      document.documentElement.setAttribute("data-theme", mode);
       write_into_json(data);
 
       for (var i = 0; i < all_elements.length; i++) {
         if (i % ELEMENTSPERPAGE === 0) {
-	  for (var j = 0; j < pinned_elements.length; j++) {
+          for (var j = 0; j < pinned_elements.length; j++) {
             all_elements.splice(i, 0, pinned_elements[j]);
-	  }
+          }
         }
       }
-      console.log("all_elementsi after fetch", all_elements, page_turn_interval);
+      console.log(
+        "all_elementsi after fetch",
+        all_elements,
+        page_turn_interval
+      );
       first_fetch = true;
       fetching = false;
     }) // <- Missing closing parenthesis here
@@ -124,15 +128,19 @@ setInterval(fetch_data, 5000);
 // Function to append elements to the events container
 function append_elements(lst) {
   lst.forEach((el) => {
-    if (el !== undefined) events.append(el); console.log('appending el', el);
+    if (el !== undefined) events.append(el);
+    console.log("appending el", el);
   });
 }
 
 // Function to refresh the displayed events
 function run_refresh() {
-//  console.log(allElements);
+  //  console.log(allElements);
   if (!first_fetch) return;
-  if (fetching) {return; console.log("aborted refresh, fetching");}
+  if (fetching) {
+    return;
+    console.log("aborted refresh, fetching");
+  }
 
   if (page * ELEMENTSPERPAGE >= all_elements.length) {
     page = 0;

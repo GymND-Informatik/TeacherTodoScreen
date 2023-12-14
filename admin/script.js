@@ -41,18 +41,18 @@ display();
 
 // Fetch the json file for the first time, write it into the events array and match the settings (mode, page_turn)
 fetch("../output.json")
-    .then((response) => response.text())
-    .then((data) => {
-      loaded_events = data;
-      var parsed = JSON.parse(loaded_events);
-      events = parsed.slice(1);
-      mode_select.value = parsed[0].mode;
-      page_turn_select.value = parsed[0].page_turn.toString();
-      display();
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+  .then((response) => response.text())
+  .then((data) => {
+    loaded_events = data;
+    var parsed = JSON.parse(loaded_events);
+    events = parsed.slice(1);
+    mode_select.value = parsed[0].mode;
+    page_turn_select.value = parsed[0].page_turn.toString();
+    display();
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 
 // -------------------------------------------------------
 
@@ -71,7 +71,10 @@ function pad(num, size) {
 
 // Write it into a simple JSON file server-side ../output.json
 function write_into_json() {
- const temp = [{'page_turn': page_turn_interval, 'mode': mode_select.value}, ...events];
+  const temp = [
+    { page_turn: page_turn_interval, mode: mode_select.value },
+    ...events,
+  ];
   console.log(temp, mode_select.value);
   fetch("saveFile.php", {
     method: "POST",
@@ -212,22 +215,23 @@ function display() {
     for (var i = 0; i < events.length; i++) {
       ordered_events.push(events[i]);
     }
-  }
-  else if (option === "2") {
+  } else if (option === "2") {
     // reverse the order of arrallevents
     for (var i = 0; i < events.length; i++) {
       ordered_events.push(events[events.length - i - 1]);
     }
-  }
-  else if (option === "3") {
+  } else if (option === "3") {
     // sort by bis_date, earliest to lastest
-    ordered_events = [...events].sort((a,b) => a.bis - b.bis);
-    ordered_events.sort((a,b) => {return new Date(a.bis).getTime() - new Date(b.bis).getTime();});
-  }
-  else if (option === "4") {
+    ordered_events = [...events].sort((a, b) => a.bis - b.bis);
+    ordered_events.sort((a, b) => {
+      return new Date(a.bis).getTime() - new Date(b.bis).getTime();
+    });
+  } else if (option === "4") {
     // sort in opposite order as option 3
     ordered_events = events;
-    ordered_events.sort((a,b) => {return new Date(b.bis).getTime() - new Date(a.bis).getTime();});
+    ordered_events.sort((a, b) => {
+      return new Date(b.bis).getTime() - new Date(a.bis).getTime();
+    });
   }
 
   ordered_events.forEach(function (x) {
@@ -293,10 +297,11 @@ function display() {
       events_html += " checked";
     }
 
-    events_html += "><label for='checkbox-" +
-    x.event +
-    "' class='label-glass-checkbox'></label></div>" +
-    "</div>\n";
+    events_html +=
+      "><label for='checkbox-" +
+      x.event +
+      "' class='label-glass-checkbox'></label></div>" +
+      "</div>\n";
   });
 
   console.log("[rendered]", events);
@@ -346,7 +351,7 @@ upload_button.addEventListener("click", function () {
         von: input_from.value,
         bis: input_to.value,
         pinned: false,
-        large: "pending"
+        large: "pending",
       };
 
       // SAFEGUARDS
@@ -402,12 +407,15 @@ upload_button.addEventListener("click", function () {
     .catch((error) => {
       console.error("Error:", error);
     });
-    writing = false;
+  writing = false;
 });
 
 // Check the dates to see if they belong into oblivion
 function check_events() {
-  if (writing) {console.log('aborted check c something else is writing'); return;}
+  if (writing) {
+    console.log("aborted check c something else is writing");
+    return;
+  }
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
@@ -451,7 +459,7 @@ setInterval(check_events, 1000);
 
 // Pin an event (mark it as pinned, will take effect only on the frontend)
 function pin(checkbox) {
-    writing = true;
+  writing = true;
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
@@ -463,8 +471,10 @@ function pin(checkbox) {
         if (events[i].pinned) num_pinned++;
       }
       if (num_pinned >= 2 && checkbox.checked) {
-        setTimeout(() => { checkbox.checked = false;}, 0);
-        alert('Es können nicht mehr als 2 Events angeheftet sein!');
+        setTimeout(() => {
+          checkbox.checked = false;
+        }, 0);
+        alert("Es können nicht mehr als 2 Events angeheftet sein!");
         return;
       }
       for (var i = 0; i < events.length; i++) {
@@ -478,7 +488,7 @@ function pin(checkbox) {
     .catch((error) => {
       console.error("Error:", error);
     });
-    writing = false;
+  writing = false;
 }
 
 // On button press just fill in the input_from with the current date in the correct format

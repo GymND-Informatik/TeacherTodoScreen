@@ -188,7 +188,8 @@ input[type="datetime-local"]:focus {
 }
 
 input::placeholder,
-.ql-editor::placeholder {}
+.ql-editor::placeholder {
+}
 
 input[type="text"]:hover,
 input[type="datetime-local"]:hover,
@@ -456,7 +457,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 li {
-  font-family: 'DIN W02 Light';
+  font-family: "DIN W02 Light";
 }
 
 /* Style for instant button */
@@ -558,7 +559,7 @@ li {
   transition: background-color 0.4s;
 }
 
-.glass-checkbox:checked+.label-glass-checkbox {
+.glass-checkbox:checked + .label-glass-checkbox {
   background-color: var(--button-background);
   border-color: transparent;
 }
@@ -580,6 +581,6 @@ li {
   backdrop-filter: blur(7px);
 }
 
-.glass-checkbox:checked+.label-glass-checkbox::before {
+.glass-checkbox:checked + .label-glass-checkbox::before {
   transform: translate(36px, -50%);
 }
