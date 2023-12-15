@@ -1,7 +1,7 @@
 <div align="center">
 <h1 align="center">
 <img src="V Str (1).png" width="100" />
-<br>TEACHERTODOSCREEN</h1>
+<br>TeacherTodoScreen</h1>
 <h3>◦ Empower Educators, Elevate Tasks – TeacherTodoScreen</h3>
 <h3>◦ Developed with the software and tools below.</h3>
 
@@ -223,5 +223,5 @@ This project is protected under the [SELECT-A-LICENSE](https://choosealicense.co
 [**Return**](#Top)
 
 ---
-# TeacherTodoScreen
+
 
