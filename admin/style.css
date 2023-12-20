@@ -368,8 +368,17 @@ input[type="datetime-local"],
 
 #text-container p {
   text-align: justify;
-  line-height: 1.2em;
+  line-height: 0.5em;
   letter-spacing: -0.015em;
+  font-size: 20px;
+}
+
+.ql-size-small {
+  font-size: 15px !important;  
+
+}
+
+.ql-editor p {
   font-size: 20px;
 }
 

@@ -99,6 +99,12 @@ function fetch_data() {
       document.documentElement.setAttribute("data-theme", mode);
       write_into_json(data);
 
+      var n = all_elements.length;
+      if (n === 0) {
+        for (var i = 0; i < pinned_elements.length; i++) {
+          all_elements.push(pinned_elements[i]);
+        }
+      }
       for (var i = 0; i < all_elements.length; i++) {
         if (i % ELEMENTSPERPAGE === 0) {
           for (var j = 0; j < pinned_elements.length; j++) {
