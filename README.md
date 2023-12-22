@@ -125,9 +125,9 @@ All you need for the website to work is have apache running and installed. Then 
 
 ### 🔧 Installation
 
-1. Clone the TeacherTodoScreen repository into the `/var/www/html/` directory:
+1. Clone the TeacherTodoScreen repository into the `/var/www/html/` directory (make sure it is empty):
 ```sh
-sudo git clone https://github.com/GymND-Informatik/TeacherTodoScreen
+sudo git clone https://github.com/GymND-Informatik/TeacherTodoScreen /var/www/html
 ```
 
 2. Change to the project directory:
@@ -138,6 +138,11 @@ cd /var/www/html/
 3. Ensure you have the right permissions:
 ```
 sudo chmod 777 . -R
+```
+
+4. if you haven't already, start apache:
+```
+sudo systemctl start apache2
 ```
 
 ---
