@@ -163,9 +163,9 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 #### Acknowledgments
 
 - Distribution of work:
-  - 36% Filip
+  - 35% Filip
   - 35% Kubo
-  - 3% Elias
+  - 4% Elias
   - 1% Rest
   - 25% ChatGPT
 
