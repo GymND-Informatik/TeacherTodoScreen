@@ -77,6 +77,73 @@ The repository structure includes two main sections: **Root** and **Admin** (als
 
 ---
 
+#### Installation
+
+1. Clone the TeacherTodoScreen repository into the `/var/www/html/` directory (make sure it is empty):
+```sh
+sudo git clone https://github.com/GymND-Informatik/TeacherTodoScreen /var/www/html
+```
+
+2. Change to the project directory:
+```sh
+cd /var/www/html/
+```
+
+3. Ensure you have the right permissions (just run them all):
+```
+sudo chmod 777 . -R
+sudo chown -R www-data:www-data /var/www/html/
+sudo chmod -R 755 /var/www/html/
+```
+
+4. if you haven't already, start apache:
+```
+sudo systemctl start apache2
+```
+
+---
+
+#### Contributing
+
+
+Contributions are welcome! Here are several ways you can contribute:
+
+- **[Submit Pull Requests](https://github.com/GymND-Informatik/TeacherTodoScreen/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+- **[Join the Discussions](https://github.com/GymND-Informatik/TeacherTodoScreen/discussions)**: Share your insights, provide feedback, or ask questions.
+- **[Report Issues](https://github.com/GymND-Informatik/TeacherTodoScreen/issues)**: Submit bugs found or log feature requests for GYMND-INFORMATIK.
+
+##### *Contributing Guidelines*
+
+<details closed>
+<summary>Click to expand</summary>
+
+1. **Fork the Repository**: Start by forking the project repository to your GitHub account.
+2. **Clone Locally**: Clone the forked repository to your local machine using a Git client.
+   ```sh
+   git clone <your-forked-repo-url>
+   ```
+3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
+   ```sh
+   git checkout -b new-feature-x
+   ```
+4. **Make Your Changes**: Develop and test your changes locally.
+5. **Commit Your Changes**: Commit with a clear and concise message describing your updates.
+   ```sh
+   git commit -m 'Implemented new feature x.'
+   ```
+6. **Push to GitHub**: Push the changes to your forked repository.
+   ```sh
+   git push origin new-feature-x
+   ```
+7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
+
+Once your PR is reviewed and approved, it will be merged into the main branch.
+
+</details>
+
+
+---
+
 #### Acknowledgments
 
 - Distribution of work:
