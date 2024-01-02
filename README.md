@@ -84,4 +84,4 @@ The repository structure includes two main sections: **Root** and **Admin** (als
   - 5% Filip
   - 3% Elias
   - 1% Rest
-  - 91% ChatGPT
+  - 86% ChatGPT
