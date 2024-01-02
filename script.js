@@ -112,11 +112,6 @@ function fetch_data() {
           }
         }
       }
-      console.log(
-        "all_elementsi after fetch",
-        all_elements,
-        page_turn_interval
-      );
       first_fetch = true;
       fetching = false;
     }) // <- Missing closing parenthesis here
@@ -135,7 +130,6 @@ setInterval(fetch_data, 5000);
 function append_elements(lst) {
   lst.forEach((el) => {
     if (el !== undefined) events.append(el);
-    console.log("appending el", el);
   });
 }
 
@@ -145,7 +139,7 @@ function run_refresh() {
   if (!first_fetch) return;
   if (fetching) {
     return;
-    console.log("aborted refresh, fetching");
+
   }
 
   if (page * ELEMENTSPERPAGE >= all_elements.length) {
