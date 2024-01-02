@@ -29,7 +29,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 ## Code of Conduct
 
 This project and everyone participating in it is governed by the
-[Teacher Todo Screen Code of Conduct](https://github.com/GymND-Informatik/TeacherTodoScreenblob/master/CODE_OF_CONDUCT.md).
+[Teacher Todo Screen Code of Conduct](https://github.com/GymND-Informatik/TeacherTodoScreenblob/master/.github/CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior
 to .
 
