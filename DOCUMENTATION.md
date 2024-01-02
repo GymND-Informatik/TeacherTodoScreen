@@ -2,39 +2,36 @@
 
 ## Backend Administration
 
-### Input Fields
+### Actions
 
-- **Event Name, Text, From, To**: These are the four primary input fields for event details.
-- **Dropdown Menu**: This allows the selection of the page change speed on the frontend. Changes can be implemented by clicking the adjacent button.
-- **Pinning Option**: Events can be set as 'pinned', meaning they remain prominently displayed on the frontend.
+- **Event Name, Text, From, To**: These are the four primary input fields for event details. The corresponding HTML elements are classified by their ids: `event-input` for the event name, `editor` for the quill editor that allows for rich text input, `from-time` for the time at which the event should start to appear on the frontend and `to-time` for the time when the event should get deleted.
+- **Dropdown Menus**: `page-turn-select` allows the selection of the page change speed on the frontend. `display-order-select` lets you select the order in which the events are supposed to be displayed in (only applies for the backend display). And `mode-select` selects the theme (dark/light).
+- **Pinning Option**: Events can be set as 'pinned' by checking the "Anheften" checkbox (ids are configured in the javascript, more on that later), meaning they remain prominently displayed on the frontend.
+- **Edit and Delete:** Each event can be edited and deleted by the press of the buttons "Löschen" or "Bearbeiten". Like the pinned checkbox, these do not appear initially in the HTML but are appended by the javascript at runtime.
 
 ### Functionality
+This has to be explained in detail and you have to understand it well in order to be able to improve or append new features. This should give you a somewhat okay understanding of the javascript even though I don't blame you if you don't understand everything, neither do I haha.
 
-- **Data Upload**: Clicking the "Hochladen" button transfers data from the input fields to the `events` array. Each event is represented as a JSON object with six attributes:
+- **Data Upload**: Clicking the "Hochladen" button triggers line 333 in [admin/script.js](admin/script.js). First a boolean called `writing` is set to true which acts as a lockguard. Before anything is done, the [output.json](output.json) file is fetched and the `events` array is updated to match the data from the JSON file (line 340). This ensures that no data (eventually uploaded from a different device) gets overwritten. (Also you might notice that the data from the fetch is sliced. This just selects the part of the JSON that has information about the events since the file also contains information on the mode and page turn frequency.) Then the rich text is fetched from the quill editor and the function `modify_quill_html()` updates some classes to fit the local css styling. Then an event is created (line 348). Each event is represented as a JSON object with six attributes:
   - `event`: Title of the event.
-  - `text`: Additional details about the event (formatted using quill.js).
+  - `text`: Additional details about the event (rich text using quill.js).
   - `von`: Start time for the event display.
   - `bis`: End time, after which the event is deleted.
   - `pinned`: Boolean indicating if the event is pinned on the frontend.
-  - `page_turn`: Page changing speed on the frontend (applies to all events).
-- **Data Validation and Writing**: Before submission, data undergoes validation. Valid data is then written into `output.json` via `write_into_json()`, which accesses [admin/saveFile.php](admin/saveFile.php).
-- **Data Loading and Monitoring**: [output.json](output.json) holds all event data, loaded at admin startup by `read_json()`. Every second, `check_events()` evaluates events for deletion based on their timing.
-- **Event Management**: Events can be deleted ("Löschen" button) or edited ("Bearbeiten" button). The deletion uses `button_delete()` to compare event titles for removal. The editing function pre-fills input fields with existing data, making necessary adjustments for quill.js compatibility.
-- **Display Update**: Admin actions trigger updates in [admin/script.js](admin/script.js), refreshing the HTML display of events. The `display()` function dynamically adjusts the innerHTML of `displayallevents`, incorporating elements like titles, text, dates, control buttons, and the pinning option.
-- **Pinning Events**: Selecting the "Anheften" checkbox activates `pin()`, marking the event as pinned in [output.json](output.json).
+  - `large`: Signifying if the text fits in the display div on the frontend. The initial value is always 'pending'. 'fine' means it fits and 'large' means it is too big. Finally, the data is uploaded (**Data Validation and Writing**), the display gets updated (`display()`) and the input fields are cleared.
+- **Data Validation and Writing**: Before submission, data undergoes validation, checking if the dates make sense and if the title is appropriate. Valid data is then written into [output.json](output.json) via `write_into_json()`, which accesses [admin/saveFile.php](admin/saveFile.php). 
+- **Data Loading and Monitoring**: [output.json](output.json) holds all event data, loaded at admin startup by `read_json()`. Every second, `check_events()` (line 415) first checks for the `writing` lock and fetches the data to match the newest version and then goes through all the events. Before it does that though, it reads the `mode` and `page_turn` value and updates the HTML elements `mode_select` and `page_turn_select` accordingly. Then every event is checked whether it should be deleted based on the current time and the event's `event.bis` time. If there's a change detected, the JSON is updated using `write_into_json()` (line 447). The display is refreshed (line 449).
+- **Event Management**: Events can be deleted ("Löschen" button) or edited ("Bearbeiten" button). The deletion uses `button_delete()` to compare event titles for removal. To find which events is supposed is to be deleted, the event name is compared to the name of the button, which was set up in the javascript to match the event name. The editing function `button_edit()` pre-fills input fields with existing data, making necessary adjustments for quill.js compatibility. Each one fetches the data before doing anything since otherwise some data might get overwritten.
+- **Display Update**: Admin actions trigger updates in [admin/script.js](admin/script.js), refreshing the HTML display of events. The `display()` function dynamically adjusts the innerHTML of `displayallevents`, incorporating elements like titles, text, dates, control buttons, and the pinning option. First it sorts the events based on the user-selected display order given by `display_order_select.value`. Then, for each event a new div is created. Based on the events 'large' status, different classes are appended. These change the color of the div, so that the user sees if an events is too big or if its size is still unconfirmed. Then the event name and the dates are appended (lines 273-277). IF the event has a text, a `text-container` is appended with the rich text inside it. Then, the buttons are appended. The delete and edit buttons have their names set by the event's names (`x.event`). The pinning checkbox gets appended as well, its id has to be unique for it to work with the label, so the id is always `checkbox-EVENTNAME`. All of these button call a function in the javascript when clicked.
+- **Pinning Events**: Selecting the "Anheften" checkbox activates `pin()`, marking the event as pinned in [output.json](output.json). But the program never allows more than 2 events to be pinned at the same time, since that would fill up the display too much. Naturally, at the beginning the JSON is fetched to avoid conflicts.
 
 ## Frontend
 
 ### Display
 
-- **Event Visualization**: The frontend showcases events from [output.json](output.json), displaying four at a time and allowing page navigation.
+- **Event Visualization**: The frontend showcases events from [output.json](output.json), displaying four at a time (of which two can be pinned, meaning they always show up) and automatically turning pages.
 
 ### Functionality
 
-- **Data Fetching and Processing**: `fetchData()` runs every 5 seconds, retrieving and parsing [output.json](output.json). It organizes events for display, prioritizing pinned events and setting the `page_turn_interval`.
-- **Automatic Refresh**: `check_refresh()` maintains a counter, triggering `runRefresh()` when the interval exceeds `page_turn_interval`. This mechanism ensures timely updates and page transitions.
-- **Event Presentation**: `runRefresh()` manages the HTML content, displaying events and facilitating page changes as needed.
-
-## Styling
-
-The styling for the backend and frontend is defined in `admin/style.css` and `style.css` respectively. The styles include definitions for the layout of the event display, the appearance of text, and the behavior of buttons and input fields. Special styles are applied for pinned events and events that are currently being edited.
+- **Data Fetching and Processing**: `fetchData()` runs every 5 seconds, retrieving and parsing [output.json](output.json). It fetches the [output.json](output.json). It sets a lock boolean `fetching` and clears the `all_elements` and `pinned_elements` array. Then the variables `_interval` and `_mode` are initiated. Then the script loops through all the events. If the event's dates are valid (meaning the current date is between the start and end date), a new HTML element is created, filled with the event name and text. Lines 75 to 81 check if the event text is too long for the div by adding it to HTML, checking its height and instantly removing it. If that is the case the `large` attribute of the event (discussed earlier) is set to true. Finally, the event is appended to either `pinned_elements` or `all_elements`. Lines 89 to 97 update the interval at which runRefresh() runs. The mode is set and the data is rewritten since the `large` attributes were updated and that has to be written into the JSON. Lines 102 to 114 arrange the events so that the pinned elements are always on top (if it ain't broken don't fix it idk how it makes sense but id does). 
+- **Event Presentation**: `runRefresh()` manages the HTML content, displaying events and facilitating page turns as needed.
