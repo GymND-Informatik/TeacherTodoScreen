@@ -1,7 +1,21 @@
-<img src="logo.png" width="100" alt="logo"/>
-    
-## TeacherTodoScreen
-
+<div align="center">
+<h1 align="center">
+<img src="V Str (1).png" width="100" />
+<br>TeacherTodoScreen</h1>
+<h3>o Empower Educators, Elevate Tasks - TeacherTodoScreen</h3>
+<h3>o Developed with the software and tools below.</h3>
+<p align="center">
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?
+style=flat&logo=JavaScript&logoColor=black" alt="JavaScript" />
+cimg src="httos://img.shields.io/badge/HTML5-E34F26.svg?style=flat&logo=HTML5&logoColor=white" alt="HTML5" />
+<img src="https://img.shields.io/badge/PHP-777BB4.svg?stvle=flat&logo=PHP&logoColor=white" alt="pHp! />
+<img src="https://img.shields.io/badge/JSON-000000.svg?style=flat&logo=JSON&logoColor=white" alt="JSON" />
+</p>
+<img src="https://img.shields.io/github/license/GymND-Informatik/ TeacherTodoScreen?style=flat&color=5D6D7E' alt="GitHub license" />
+<img src="https://img.shields.io/github/last-commit/GymND-Informatik/TeacherTodoScreen?style=flat&color=5D6D7E' alt="git-last-commit" />
+<img src="https://imq.shields.io/github/commit-activity/m/GymND-Informatik/TeacherTodoScreen?stvle=flat&color=5D6D7E" alt="GitHub commit activitv" />
+<img src="httos://ima.shields.io/github/languages/top/GmND-Informatik/TeacherTodoScreen?stvle=flat&color=5D6D7E' alt="GitHub top lanquage" />
+</div>
 #### Overview
 
 TeacherTodoScreen is a web-based application crafted for educators (and basically anyone who can make use of this), enabling efficient task, event, and announcement management. It features an intuitive admin panel for content customization, supporting rich text editing, sorting, and styling options. The user-friendly interface offers both light and dark modes, ensuring seamless engagement with auto-updated information via a JSON file.
@@ -147,10 +161,12 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 #### Acknowledgments
 
 - Distribution of work:
-  - 5% Kubo
-  - 5% Filip
+  - 36% Filip
+  - 35% Kubo
   - 3% Elias
   - 1% Rest
-  - 86% ChatGPT
+  - 25% ChatGPT
+
+---
 
 [**Return**](#Top)
