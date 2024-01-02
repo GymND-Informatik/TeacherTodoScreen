@@ -438,7 +438,6 @@ function check_events() {
         var event_date = new Date(event.bis);
         if (date >= event_date) {
           events.splice(i, 1);
-          display();
           change = true;
           // Break the loop
           break;
