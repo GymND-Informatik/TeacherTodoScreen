@@ -124,7 +124,7 @@ sudo systemctl start apache2
 
 Contributions are welcome! Here are several ways you can contribute:
 
-- **[Submit Pull Requests](https://github.com/GymND-Informatik/TeacherTodoScreen/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+- **[Submit Pull Requests](https://github.com/GymND-Informatik/TeacherTodoScreen/blob/main/.github/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
 - **[Join the Discussions](https://github.com/GymND-Informatik/TeacherTodoScreen/discussions)**: Share your insights, provide feedback, or ask questions.
 - **[Report Issues](https://github.com/GymND-Informatik/TeacherTodoScreen/issues)**: Submit bugs found or log feature requests for GYMND-INFORMATIK.
 
