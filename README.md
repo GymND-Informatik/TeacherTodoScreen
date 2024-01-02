@@ -63,7 +63,7 @@ The repository structure includes two main sections: **Root** and **Admin** (als
 | [output.json](output.json)                      | Contains a list of objects representing tasks or events, preferences, timestamps, and individual event details used by the frontend for display.                                                              |
 | [saveFile.php](saveFile.php)                       | Processes POST requests by storing received content into [output.json](output.json). Validates requests and reports success/error messages based on saving the text.                                                 |
 | [script.js](script.js)                            | Fetches the [output.json](output.json) file, updates HTML code to display events, manages event display, and configures settings such as mode and page-turn interval. For further information read [DOCUMENTATION.md](DOCUMENTATION.md).                                                        |
-| [style.css](link)                                | Contains CSS rules for [index.html](index.html) with preprogrammed colors for light and dark mode.                                                                                                                                                                             |
+| [style.css](style.css)                                | Contains CSS rules for [index.html](index.html) with preprogrammed colors for light and dark mode.                                                                                                                                                                             |
 
 ##### Admin
 
