@@ -57,7 +57,6 @@ fetch("../output.json")
 // -------------------------------------------------------
 
 page_turn_select.addEventListener("change", function () {
-  console.log(page_turn_select.value);
   page_turn_interval = page_turn_select.value;
   write_into_json();
 });
@@ -75,7 +74,6 @@ function write_into_json() {
     { page_turn: page_turn_interval, mode: mode_select.value },
     ...events,
   ];
-  console.log(temp, mode_select.value);
   fetch("saveFile.php", {
     method: "POST",
     headers: {
@@ -98,12 +96,7 @@ function button_delete(button) {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("[delete] 1 begin fetch");
-      console.log("[delete] 2 raw", data); // Log the content of the file
-      loaded_events = data;
       events = JSON.parse(loaded_events).slice(1);
-      console.log("[delete] 3 fetched into array", events);
-      console.log("[delete] 4 end fetch");
 
       // Loop through all the elements in arrallevents and see if they match with the button
       for (var i = 0; i < events.length; i++) {
@@ -147,12 +140,8 @@ function button_edit(button) {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("[edit] 1 begin fetch");
-      console.log("[edit] 2 raw", data); // Log the content of the file
       loaded_events = data;
       events = JSON.parse(loaded_events).slice(1);
-      console.log("[edit] 3 fetched into array", events);
-      console.log("[edit] 4 end fetch");
 
       for (var i = 0; i < events.length; i++) {
         if (events[i].event == button.name) {
@@ -304,7 +293,6 @@ function display() {
       "</div>\n";
   });
 
-  console.log("[rendered]", events);
   //  console.log('events_string', event_string);
   events_display.innerHTML = events_html;
 }
@@ -335,13 +323,8 @@ upload_button.addEventListener("click", function () {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("[upload] 1 begin fetch");
-      console.log("[upload] 2 raw", data); // Log the content of the file
       loaded_events = data;
       events = JSON.parse(loaded_events).slice(1);
-      console.log("[upload] 3 fetched into array", events);
-      console.log("[upload] 4 end fetch");
-      console.log("[upload] 5 read", events);
       var text = get_content_as_html();
       text = modify_quill_html(text);
 
@@ -376,8 +359,6 @@ upload_button.addEventListener("click", function () {
       }
       var current_date = new Date();
 
-      // TODO check if this does ANYTHING anymore
-      console.log(current_date.getTime() - 1 * 60 * 1000, bis_.getTime());
       if (
         von_.getTime() <= current_date - 1 * 60 * 1000
       ) {
@@ -393,11 +374,9 @@ upload_button.addEventListener("click", function () {
 
       // Write it in
       events.push(data);
-      console.log("[upload] 6 Pushed data", events);
       // Update the display and update the output file
       display();
       write_into_json();
-      console.log("[upload] 7 written into json", events);
 
       // Clear the inputs
       input_event.value = "";
@@ -414,20 +393,15 @@ upload_button.addEventListener("click", function () {
 // Check the dates to see if they belong into oblivion
 function check_events() {
   if (writing) {
-    console.log("aborted check c something else is writing");
     return;
   }
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
-      console.log("[check] 1 begin fetch");
-      console.log("[check] 2 raw", data); // Log the content of the file
       loaded_events = JSON.parse(data);
       events = loaded_events.slice(1);
       mode_select.value = loaded_events[0].mode;
       page_turn_select.value = loaded_events[0].page_turn.toString();
-      console.log("[check] 3 fetched into array", events);
-      console.log("[check] 4 end fetch");
 
       // Remove events that do not belong there and then rewrite without the old events
       var change = false;
