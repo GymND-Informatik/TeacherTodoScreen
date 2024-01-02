@@ -1,4 +1,4 @@
-<img src="logo_readme.png" width="100" alt="logo"/>
+<img src="logo.png" width="100" alt="logo"/>
     
 ## TeacherTodoScreen
 
