@@ -368,7 +368,7 @@ input[type="datetime-local"],
 
 #text-container p {
   text-align: justify;
-  line-height: 0.5em;
+  line-height: 1.4em;
   letter-spacing: -0.015em;
   font-size: 20px;
 }

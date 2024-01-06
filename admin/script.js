@@ -127,8 +127,8 @@ function sanitize_html(html) {
 
 // Clean up some details from the raw HTML for it to fit into quill
 function clean_quill_html(html) {
-  var ret;
-  ret = html.replace("<p><br></p>", "");
+  var ret = html;
+  // ret = html.replace("<p><br></p>", "");
   return ret;
 }
 
