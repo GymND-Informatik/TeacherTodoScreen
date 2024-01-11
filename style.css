@@ -184,5 +184,5 @@ li {
 }
 
 .pinned {
-  border: 3px solid red !important;
+  border: 3px solid var(--secondary) !important;
 }
