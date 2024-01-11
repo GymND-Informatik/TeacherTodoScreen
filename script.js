@@ -124,7 +124,7 @@ function fetch_data() {
 // fetchData();
 // Set intervals for refreshing data and fetching new data
 fetch_data();
-setInterval(fetch_data, 5000);
+setInterval(fetch_data, 2000);
 
 // Function to append elements to the events container
 function append_elements(lst) {
