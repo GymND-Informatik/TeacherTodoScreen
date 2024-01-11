@@ -96,6 +96,7 @@ function button_delete(button) {
   fetch("../output.json")
     .then((response) => response.text())
     .then((data) => {
+      loaded_events = data;
       events = JSON.parse(loaded_events).slice(1);
 
       // Loop through all the elements in arrallevents and see if they match with the button
@@ -429,7 +430,7 @@ function check_events() {
 
 // Check every five seconds, can be expanded
 // TODO might do a thung where i mark a boolean as 'fetching' and do not perform writes or edits during the entirity of check_dates()
-setInterval(check_events, 1000);
+setInterval(check_events, 2000);
 
 // Pin an event (mark it as pinned, will take effect only on the frontend)
 function pin(checkbox) {
