@@ -136,17 +136,12 @@ function append_elements(lst) {
 // Function to refresh the displayed events
 function run_refresh() {
   //  console.log(allElements);
-  if (!first_fetch) return;
-  if (fetching) {
-    return;
-
-  }
-
+  
+  events.innerHTML = "";
   if (page * ELEMENTSPERPAGE >= all_elements.length) {
     page = 0;
     return;
   }
-  events.innerHTML = "";
   if (all_elements.length === 0) return;
 
   let lst = [];
